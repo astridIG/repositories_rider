@@ -31,12 +31,12 @@ struct SQLiteRuntimeConfiguration {
     }
 }
 
-class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
+class SQLiteDataSource<Key, Value:Codable> : BaseRepository<Key,Value> where Value.Key == Key {
 
     private let dbPath: String
     let version: Int
-    let policies: [CachePolicy<T>]
-    private let sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration
+    let policies: [CachePolicy<Key, Value>]
+    let sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration
 
     private let queue: FMDatabaseQueue
     private var tableCreated = false
@@ -44,24 +44,24 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
 
     var lastOffsetWithMoreItems: Int
 
-    init(version: Int, dbPath: String, policies: [CachePolicy<T>] = [], isCache: Bool = true, sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration) {
+    init(version: Int, dbPath: String, policies: [CachePolicy<Key, Value>] = [], isCache: Bool = true, sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration) {
         self.dbPath = dbPath
         self.version = version
         self.policies = policies
         self.sqliteRuntimeConfiguration = sqliteRuntimeConfiguration
 
         self.queue = FMDatabaseQueue(path: dbPath)
-        self.lastOffsetWithMoreItems = NoMoreItemsOffset
+//        self.lastOffsetWithMoreItems = NoMoreItemsOffset
+//        super.init(isCache: isCache)
 
-        super.init(isCache: isCache)
     }
 
     public convenience init(version: Int, dbName: String) {
         self.init(
             version: version,
-            dbPath: generateDBPath(dbName),
+            dbPath: generateDBPath(fileName: dbName),
             policies: [
-                VersionCachePolicy(version: version),
+                CachePolicyVersion(version: version)
                 ],
             sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration.defaultConfiguration
         )
@@ -70,16 +70,16 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
     public convenience init(version: Int, ttl: TimeInterval, dbName: String) {
         self.init(
             version: version,
-            dbPath: generateDBPath(dbName),
+            dbPath: generateDBPath(fileName: dbName),
             policies: [
-                VersionCachePolicy(version: version),
-                TTLCachePolicy(ttl: ttl),
+                CachePolicyVersion(version: version),
+                CachePolicyTtl(ttl: Int(ttl), timeUnit: ttl, timeProvider: TimeProvider())
                 ],
             sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration.defaultConfiguration
         )
     }
 
-    convenience init(version: Int, policies: [CachePolicy<T>]) {
+    convenience init(version: Int, policies: [CachePolicy<Key, Value>]) {
         self.init(
             version: version,
             dbPath: generateDBPath(),
@@ -93,8 +93,8 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
             version: version,
             dbPath: generateDBPath(),
             policies: [
-                VersionCachePolicy(version: version),
-                TTLCachePolicy(ttl: ttl)
+                CachePolicyVersion(version: version),
+                CachePolicyTtl(ttl: Int(ttl), timeUnit: ttl, timeProvider: TimeProvider())
             ],
             sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration.defaultConfiguration
         )
@@ -105,8 +105,8 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
             version: version,
             dbPath: generateDBPath(),
             policies: [
-                VersionCachePolicy(version: version),
-                TTLCachePolicy(ttl: ttl)
+                CachePolicyVersion(version: version),
+                CachePolicyTtl(ttl: Int(ttl), timeUnit: ttl, timeProvider: TimeProvider())
             ],
             sqliteRuntimeConfiguration: sqliteRuntimeConfiguration
         )
@@ -117,32 +117,31 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
             version: version,
             dbPath: generateDBPath(),
             policies: [
-                VersionCachePolicy(version: version),
+                CachePolicyVersion(version: version)
                 ],
             sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration.defaultConfiguration
         )
     }
 
     // MARK: ReadableDataSource
-    override func getByKey(key: K) -> T? {
+    override func getByKey(key: Key) -> Value? {
 
         guard tableExists() else {
             return nil
         }
 
         let sql = "SELECT * from \(tableName) WHERE id = ? ;"
-        var resultItem: T? = nil
+        var resultItem: Value? = nil
 
         queue.inTransaction { db, rollback in
             do {
                 try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
                     let result = try db.executeQuery(sql, values: [key.hashValue])
                     if result.next() {
-                        if  let cachedItem = self.cachedItemFromDBResult(result: result),
-                            let item = cachedItem.item, self.itemIsValid(cachedItem, forCachePolicies: self.policies) {
-
-                            resultItem = item
-                        }
+//                        if  let cachedItem = self.cachedItemFromDBResult(result: result),
+//                            let item = cachedItem.item, self.itemIsValid(cachedItem, forCachePolicies: self.policies) {
+//                            resultItem = item
+//                        }
                     }
                 }
 
@@ -167,34 +166,34 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
 //        }
 //    }
 
-    public override func getAll() -> [T]? {
+    public override func getAll() -> [Value]? {
         guard tableExists() else {
             return nil
         }
 
         let sql = "SELECT * from \(tableName)"
-        var returnValue: [T]? = nil
+        var returnValue: [Value]? = nil
 
         queue.inTransaction { db, rollback in
             do {
                 try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                    var cachedItems: [CacheItem<T>] = []
+                    var cachedItems: [CacheItem<Value>] = []
                     let result = try db.executeQuery(sql, values: [])
 
                     while result.next() {
-                        if let cachedItem = self.cachedItemFromDBResult(result: result) {
-                            cachedItems.append(cachedItem)
-                        }
+//                        if let cachedItem = self.cachedItemFromDBResult(result: result) {
+//                            cachedItems.append(cachedItem)
+//                        }
                     }
 
-                    let filteredItems: [CacheItem<T>] = cachedItems.filter {
+                    let filteredItems: [CacheItem<Value>] = cachedItems.filter {
                         [unowned self] (item) -> Bool in
-                        return self.itemIsValid(item, forCachePolicies: self.policies)
+                        return self.itemIsValid(item: item, forCachePolicies: self.policies)
                     }
 
                     // If there is any invalid item in the list, treat as a miss
                     if filteredItems.count != cachedItems.count {
-                        self.doInvalidateAll(db: db, rollback: rollback)
+//                        self.doInvalidateAll(db: db, rollback: rollback)
 
                     } else {
                         // populateNext works with CacheItem internally
@@ -206,7 +205,7 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
 
                 }
             } catch {
-
+                print("Error, SQLiteDataSource - Error")
             }
         }
 
@@ -239,120 +238,133 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
 
     // MARK: WritableDataSource
 
-    public func set(item: T) {
-        append(items: [item])
+    override public func addOrUpdate(value: Value) -> Value? {
+        
     }
 
-    public func replace(items: [T]) {
-        invalidateAll()
-        append(items: items)
+    override public func addOrUpdateAll(values: [Value]) -> [Value]? {
+
     }
 
-    public  func append(items: [T]) {
-        executeAsCriticalSection {
+    override public func deleteAll() {
 
-            guard self.ensureTableIsCreated() else {
-                return
-            }
-
-            var cachedItems: [CacheItem<T>] = []
-
-            for item in items {
-
-                let cachedItem = self.buildCacheItem(item: item, withVersion: self.version)
-                cachedItems.append(cachedItem)
-                let json = cachedItem.toJson()!
-                queue.inTransaction { db, rollback in
-                    do {
-                        try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                            let sql = "INSERT OR REPLACE INTO \(self.tableName) (id, item, version, updated) VALUES (?, ?, ?, ?)"
-
-                            let values: [AnyObject] = [
-                                NSNumber(integer: item.getKey().hashValue),
-                                json[CacheItemKeys.Item] as! NSString,
-                                NSNumber(integer: json[CacheItemKeys.Version] as! Int),
-                                json[CacheItemKeys.Updated] as! NSString,
-                                ]
-
-                            try db.executeUpdate(
-                                sql,
-                                values: values
-                            )
-                        }
-                    } catch {
-                        rollback.memory = true
-                    }
-                }
-            }
-
-            // Other dataSources might not be thread safe so we execute it in a critical section
-            self.populateNext(cachedItems)
-        }
     }
 
-    override public func invalidate(key: K) {
-        queue.inTransaction { db, rollback in
-            do {
-                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                    let sql = "DELETE FROM \(self.tableName) WHERE id = ?"
-                    try db.executeUpdate(
-                        sql,
-                        values: [
-                            key.hashValue
-                        ]
-                    )
-                }
-            } catch {
-                rollback.memory = true
-            }
-        }
 
-        nextDataSource?.invalidate(key)
-    }
-
-    override public func invalidateAll() {
-        queue.inTransaction { db, rollback in
-            self.doInvalidateAll(db: db, rollback: rollback)
-        }
-    }
-
-    private func doInvalidateAll(db: FMDatabase!, rollback: UnsafeMutablePointer<ObjCBool>) {
-        do {
-            try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                let sql = "DROP TABLE \(self.tableName)"
-                try db.executeUpdate(
-                    sql,
-                    values: []
-                )
-            }
-        } catch {
-            rollback.memory = true
-        }
-
-        self.nextDataSource?.invalidateAll()
-    }
-
-    private func ensureTableIsCreated() -> Bool {
-        guard !tableCreated else {
-            return true
-        }
-
-        queue.inTransaction { db, rollback in
-            do {
-                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                    let sql = "CREATE TABLE IF NOT EXISTS \(self.tableName) (id BIGINT PRIMARY KEY, item TEXT, version TINYINT, updated TEXT);"
-                    try db.executeUpdate(sql, values: [])
-                    self.tableCreated = true
-                }
-            } catch {
-                rollback.memory = true
-                self.tableCreated = false
-            }
-        }
-
-        return tableCreated
-    }
-
+    //    public func set(item: Value) {
+//        append(items: [item])
+//    }
+//
+//    public func replace(items: [Value]) {
+//        invalidateAll()
+//        append(items: items)
+//    }
+//
+//    public  func append(items: [Value]) {
+//        executeAsCriticalSection {
+//
+//            guard self.ensureTableIsCreated() else {
+//                return
+//            }
+//
+//            var cachedItems: [CacheItem<Value>] = []
+//
+//            for item in items {
+//
+//                let cachedItem = self.buildCacheItem(item: item, withVersion: self.version)
+//                cachedItems.append(cachedItem)
+//                let json = cachedItem.toJson()!
+//                queue.inTransaction { db, rollback in
+//                    do {
+//                        try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
+//                            let sql = "INSERT OR REPLACE INTO \(self.tableName) (id, item, version, updated) VALUES (?, ?, ?, ?)"
+//
+//                            let values: [AnyObject] = [
+//                                NSNumber(integer: item.getKey().hashValue),
+//                                json[CacheItemKeys.Item] as! NSString,
+//                                NSNumber(integer: json[CacheItemKeys.Version] as! Int),
+//                                json[CacheItemKeys.Updated] as! NSString,
+//                                ]
+//
+//                            try db.executeUpdate(
+//                                sql,
+//                                values: values
+//                            )
+//                        }
+//                    } catch {
+//                        rollback.memory = true
+//                    }
+//                }
+//            }
+//
+//            // Other dataSources might not be thread safe so we execute it in a critical section
+//            self.populateNext(cachedItems)
+//        }
+//    }
+//
+//    override public func invalidate(key: Key) {
+//        queue.inTransaction { db, rollback in
+//            do {
+//                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
+//                    let sql = "DELETE FROM \(self.tableName) WHERE id = ?"
+//                    try db.executeUpdate(
+//                        sql,
+//                        values: [
+//                            key.hashValue
+//                        ]
+//                    )
+//                }
+//            } catch {
+//                rollback.memory = true
+//            }
+//        }
+//
+//        nextDataSource?.invalidate(key)
+//    }
+//
+//    override public func invalidateAll() {
+//        queue.inTransaction { db, rollback in
+//            self.doInvalidateAll(db: db, rollback: rollback)
+//        }
+//    }
+//
+//    private func doInvalidateAll(db: FMDatabase!, rollback: UnsafeMutablePointer<ObjCBool>) {
+//        do {
+//            try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
+//                let sql = "DROP TABLE \(self.tableName)"
+//                try db.executeUpdate(
+//                    sql,
+//                    values: []
+//                )
+//            }
+//        } catch {
+//            rollback.memory = true
+//        }
+//
+//        self.nextDataSource?.invalidateAll()
+//    }
+//
+//    private func ensureTableIsCreated() -> Bool {
+//        guard !tableCreated else {
+//            return true
+//        }
+//
+//        queue.inTransaction { db, rollback in
+//            do {
+//                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
+//                    let sql = "CREATE TABLE IF NOT EXISTS \(self.tableName) (id BIGINT PRIMARY KEY, item TEXT, version TINYINT, updated TEXT);"
+//                    try db.executeUpdate(sql, values: [])
+//                    self.tableCreated = true
+//                }
+//            } catch {
+//                rollback.memory = true
+//                self.tableCreated = false
+//            }
+//        }
+//
+//        return tableCreated
+//    }
+//
     private func tableExists() -> Bool {
         guard !tableCreated else {
             // The table might have been created in this execution or a previous one
@@ -367,7 +379,7 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
                     self.tableCreated = result.next()
                 }
             } catch {
-                rollback.memory = true
+//                rollback.memory = true
                 self.tableCreated = false
             }
         }
@@ -376,29 +388,29 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
 
     }
 
-    private func getCount() -> Int {
-        var count = 0
-
-        guard tableExists() else {
-            return count
-        }
-
-        queue.inTransaction { db, rollback in
-            do {
-                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
-                    let sql = "select COUNT(*) from \(self.tableName);"
-                    let result = try db.executeQuery(sql, values: [])
-                    if result.next() {
-                        count = Int(result.int(forColumnIndex: 0))
-                    }
-                }
-            } catch {
-                rollback.memory = true
-            }
-        }
-
-        return count
-    }
+//    private func getCount() -> Int {
+//        var count = 0
+//
+//        guard tableExists() else {
+//            return count
+//        }
+//
+//        queue.inTransaction { db, rollback in
+//            do {
+//                try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
+//                    let sql = "select COUNT(*) from \(self.tableName);"
+//                    let result = try db.executeQuery(sql, values: [])
+//                    if result.next() {
+//                        count = Int(result.int(forColumnIndex: 0))
+//                    }
+//                }
+//            } catch {
+//                rollback.memory = true
+//            }
+//        }
+//
+//        return count
+//    }
 
     private func executeAsCriticalSection( block: () -> ()) {
         objc_sync_enter(self)
@@ -406,7 +418,7 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
         objc_sync_exit(self)
     }
 
-    private func buildCacheItem(item: T, withVersion version: Int) -> CacheItem<T> {
+    private func buildCacheItem(item: Value, withVersion version: Int) -> CacheItem<Value> {
         return CacheItem(
             value: item,
             version: version,
@@ -414,39 +426,39 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
         )
     }
 
-    private func populateNext(cachedItems: [CacheItem<T>]?) {
+    private func populateNext(cachedItems: [CacheItem<Value>]?) {
         if let items = cachedItems {
-            nextDataSource?.populate(
-                items.flatMap { cacheItem -> T? in
-                    return cacheItem.item
-                }
-            )
+//            nextDataSource?.populate(
+//                items.flatMap { cacheItem -> Value? in
+//                    return cacheItem.item
+//                }
+//            )
         }
     }
 
-    private func populateNext(collection: CollectionContainer<T>?) {
+    private func populateNext(collection: CollectionContainer<Value>?) {
         if let collection = collection {
-            nextDataSource?.populate(collection)
+//            nextDataSource?.populate(collection)
         }
     }
 
-    private func itemIsValid(item: CacheItem<T>, forCachePolicies policies:[CachePolicy<T>]) -> Bool {
+    private func itemIsValid(item: CacheItem<Value>, forCachePolicies policies:[CachePolicy<Key, Value>]) -> Bool {
         return policies.reduce(true) {
             (valid, policy) -> Bool in
-            return valid && policy.isValid(item)
+            return valid && policy.isValid(cacheItem: item)
         }
     }
 
-    private func unwrapCachedItems(items: [CacheItem<T>]) -> [T] {
-        return items.flatMap { (cachedItem: CacheItem<T>) -> T? in
-            cachedItem.item
+    private func unwrapCachedItems(items: [CacheItem<Value>]) -> [Value] {
+        return items.flatMap { (cachedItem: CacheItem<Value>) -> Value? in
+//            cachedItem.item
         }
     }
 
-    private func executeSQLBlock(dataBase: FMDatabase, fromInsideTransaction: Bool = false, block: (FMDatabase) throws -> ()) rethrows {
-        dataBase.logsErrors = sqliteRuntimeConfiguration.logsErrors
-        dataBase.traceExecution = sqliteRuntimeConfiguration.traceExecution
-        dataBase.crashOnErrors = sqliteRuntimeConfiguration.crashOnErrors
+    func executeSQLBlock(dataBase: FMDatabase, fromInsideTransaction: Bool = false, block: (FMDatabase) throws -> ()) rethrows {
+//        dataBase.logsErrors = sqliteRuntimeConfiguration.logsErrors
+//        dataBase.traceExecution = sqliteRuntimeConfiguration.traceExecution
+//        dataBase.crashOnErrors = sqliteRuntimeConfiguration.crashOnErrors
 
         dataBase.open()
         try block(dataBase)
@@ -455,20 +467,20 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
         }
     }
 
-    private func cachedItemFromDBResult(result: FMResultSet) -> CacheItem<T>? {
-        let itemString = result.string(forColumn: "item")
-        let version = result.int(forColumn: "version")
-        let updated = result.string(forColumn: "updated")
-
-        let dictionary: [String:AnyObject] = [
-            CacheItemKeys.Item: itemString,
-            CacheItemKeys.Version: Int(version),
-            CacheItemKeys.Updated: updated
-        ]
-
-        // TODO: Change timestamp value
-        return CacheItem<T>(value: dictionary, version: Int(self.version), timestamp: 13131321)
-    }
+//    private func cachedItemFromDBResult(result: FMResultSet) -> CacheItem<Value>? {
+//        let itemString = result.string(forColumn: "item")
+//        let version = result.int(forColumn: "version")
+//        let updated = result.string(forColumn: "updated")
+//
+//        let dictionary: [String :Any] = [
+//            "CacheItemKeys.Item" : itemString,
+//            "CacheItemKeys.Version" : Int(version),
+//            "CacheItemKeys.Updated" : updated
+//        ]
+//
+//        // TODO: Change timestamp value
+//        return CacheItem<Value>(value: dictionary, version: Int(self.version), timestamp: 13131321)
+//    }
 
     private func getError(code: SQLiteDataSourceErrorCode, description: String) -> NSError {
         return NSError(
@@ -514,12 +526,12 @@ class SQLiteDataSource<K, T:Codable> : BaseRepository<K,T> where T.Key == K {
             description: "The fetched items did not pass the caching policies check"
         )
     }
-}
 
-// Can't make it part of the object as it is used in the init method
-private func generateDBPath(fileName: String = NSUUID().uuidString) -> String {
-    let cachesPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.UserDomainMask, true)[0]
-    return "\(cachesPath)/\(fileName).sqlite"
+    // Can't make it part of the object as it is used in the init method
+    private func generateDBPath(fileName: String = NSUUID().uuidString) -> String {
+        let cachesPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
+        return "\(cachesPath)/\(fileName).sqlite"
+    }
 }
 
 
