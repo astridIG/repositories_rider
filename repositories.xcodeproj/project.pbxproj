@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902491F4C40AC004C1411 /* Identifiable.swift */; };
+		0049024D1F4C42B3004C1411 /* InMemoryCacheDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049024C1F4C42B3004C1411 /* InMemoryCacheDataSource.swift */; };
+		0049024F1F4C42C2004C1411 /* CachePolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049024E1F4C42C2004C1411 /* CachePolicies.swift */; };
+		004902511F4C4552004C1411 /* CacheItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902501F4C4552004C1411 /* CacheItem.swift */; };
+		004902531F4C4A47004C1411 /* CachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902521F4C4A47004C1411 /* CachePolicy.swift */; };
+		004902561F4C6893004C1411 /* SQLiteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902551F4C6893004C1411 /* SQLiteDataSource.swift */; };
 		007F84821F4C18510011F55F /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84811F4C18510011F55F /* BaseRepository.swift */; };
 		007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84831F4C1D4D0011F55F /* DataSource.swift */; };
 		009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF691F4C10BD0050AE20 /* AppDelegate.swift */; };
@@ -39,6 +44,11 @@
 
 /* Begin PBXFileReference section */
 		004902491F4C40AC004C1411 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		0049024C1F4C42B3004C1411 /* InMemoryCacheDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryCacheDataSource.swift; sourceTree = "<group>"; };
+		0049024E1F4C42C2004C1411 /* CachePolicies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicies.swift; sourceTree = "<group>"; };
+		004902501F4C4552004C1411 /* CacheItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheItem.swift; sourceTree = "<group>"; };
+		004902521F4C4A47004C1411 /* CachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
+		004902551F4C6893004C1411 /* SQLiteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDataSource.swift; sourceTree = "<group>"; };
 		007F84811F4C18510011F55F /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
 		007F84831F4C1D4D0011F55F /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		009CCF661F4C10BD0050AE20 /* repositories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repositories.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +92,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0049024B1F4C4265004C1411 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				0049024C1F4C42B3004C1411 /* InMemoryCacheDataSource.swift */,
+				0049024E1F4C42C2004C1411 /* CachePolicies.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		004902541F4C6866004C1411 /* sql */ = {
+			isa = PBXGroup;
+			children = (
+				004902551F4C6893004C1411 /* SQLiteDataSource.swift */,
+			);
+			path = sql;
+			sourceTree = "<group>";
+		};
 		009CCF5D1F4C10BC0050AE20 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +132,8 @@
 		009CCF681F4C10BD0050AE20 /* repositories */ = {
 			isa = PBXGroup;
 			children = (
+				004902541F4C6866004C1411 /* sql */,
+				0049024B1F4C4265004C1411 /* data */,
 				009CCF971F4C14CE0050AE20 /* domain */,
 				009CCF691F4C10BD0050AE20 /* AppDelegate.swift */,
 				009CCF6B1F4C10BD0050AE20 /* ViewController.swift */,
@@ -149,6 +178,8 @@
 				007F84811F4C18510011F55F /* BaseRepository.swift */,
 				007F84831F4C1D4D0011F55F /* DataSource.swift */,
 				004902491F4C40AC004C1411 /* Identifiable.swift */,
+				004902501F4C4552004C1411 /* CacheItem.swift */,
+				004902521F4C4A47004C1411 /* CachePolicy.swift */,
 			);
 			path = repositories;
 			sourceTree = "<group>";
@@ -286,9 +317,14 @@
 			files = (
 				009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */,
 				0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */,
+				0049024F1F4C42C2004C1411 /* CachePolicies.swift in Sources */,
+				004902511F4C4552004C1411 /* CacheItem.swift in Sources */,
+				004902561F4C6893004C1411 /* SQLiteDataSource.swift in Sources */,
+				0049024D1F4C42B3004C1411 /* InMemoryCacheDataSource.swift in Sources */,
 				009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */,
 				007F84821F4C18510011F55F /* BaseRepository.swift in Sources */,
 				007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */,
+				004902531F4C4A47004C1411 /* CachePolicy.swift in Sources */,
 				009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
