@@ -7,10 +7,14 @@ protocol CachePolicyProtocol {
     func isValid(cacheItem: CacheItem<Value>) -> Bool
 }
 
-class CachePolicyTtl<Key: Hashable, Value: Codable>: CachePolicyProtocol {
+class CachePolicy<Key: Hashable, Value: Codable>: CachePolicyProtocol {
+    func isValid(cacheItem: CacheItem<Value>) -> Bool  { fatalError("Must override") }
+}
 
-    var ttl: Int
-    var timeUnit: TimeInterval
+class CachePolicyTtl<Key, Value: Codable>: CachePolicy<Key ,Value> where Value.Key == Key {
+
+    private var ttl: Int
+    private var timeUnit: TimeInterval
     private var timeProvider: TimeProvider
 
     init(ttl: Int, timeUnit: TimeInterval, timeProvider: TimeProvider) {
@@ -19,14 +23,14 @@ class CachePolicyTtl<Key: Hashable, Value: Codable>: CachePolicyProtocol {
         self.timeProvider = timeProvider
     }
 
-    func isValid(cacheItem: CacheItem<Value>) -> Bool {
+    override func isValid(cacheItem: CacheItem<Value>) -> Bool {
         let lifeTime = cacheItem.timestamp + timeUnit
         return lifeTime > timeProvider.currentTimeMillis()
     }
 
 }
 
-class CachePolicyVersion<K: Hashable, V: Codable> : CachePolicyProtocol {
+class CachePolicyVersion<Key, Value: Codable>: CachePolicy<Key ,Value> where Value.Key == Key {
 
     private var version: Int
 
