@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902491F4C40AC004C1411 /* Identifiable.swift */; };
 		007F84821F4C18510011F55F /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84811F4C18510011F55F /* BaseRepository.swift */; };
 		007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84831F4C1D4D0011F55F /* DataSource.swift */; };
 		009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF691F4C10BD0050AE20 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		004902491F4C40AC004C1411 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		007F84811F4C18510011F55F /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
 		007F84831F4C1D4D0011F55F /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		009CCF661F4C10BD0050AE20 /* repositories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repositories.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 				009CCF9A1F4C15080050AE20 /* Policies.swift */,
 				007F84811F4C18510011F55F /* BaseRepository.swift */,
 				007F84831F4C1D4D0011F55F /* DataSource.swift */,
+				004902491F4C40AC004C1411 /* Identifiable.swift */,
 			);
 			path = repositories;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */,
+				0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */,
 				009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */,
 				007F84821F4C18510011F55F /* BaseRepository.swift in Sources */,
 				007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */,

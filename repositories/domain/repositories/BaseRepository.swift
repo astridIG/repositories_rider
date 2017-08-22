@@ -1,6 +1,6 @@
 import Foundation
 
-class BaseRepository<K,V>: ReadableDataSource<K, V> {
+class BaseRepository<K,V : Identifiable<K>>: ReadableDataSource<K, V> {
 
     private var readableDataSources = [ReadableDataSource<K, V>]()
 
@@ -112,3 +112,4 @@ class BaseRepository<K,V>: ReadableDataSource<K, V> {
         return getAll(policy: ReadPolicy.readAll)
     }
 }
+
