@@ -1,12 +1,12 @@
 import Foundation
 
-class CacheItem<V: Codable> {
+class CacheItem<Value: Codable> {
 
-    var value: V
+    var value: Value
     var version: Int
     var timestamp: Double
 
-    init(value: V,
+    init(value: Value,
          version: Int,
          timestamp:  Double) {
         self.value = value
