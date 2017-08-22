@@ -1,6 +1,14 @@
 import Foundation
 
-class CachePolicyTtl<K,  V : Identifiable<K>> : CachePolicy<K, V> {
+protocol CachePolicyProtocol {
+    associatedtype Key: Hashable
+    associatedtype Value: Codable
+
+    func isValid(cacheItem: CacheItem<Value>) -> Bool
+}
+
+class CachePolicyTtl<Key: Hashable, Value: Codable>: CachePolicyProtocol {
+
     var ttl: Int
     var timeUnit: TimeInterval
     private var timeProvider: TimeProvider
@@ -11,15 +19,14 @@ class CachePolicyTtl<K,  V : Identifiable<K>> : CachePolicy<K, V> {
         self.timeProvider = timeProvider
     }
 
-    override func isValid(cacheItem : CacheItem<V>) -> Bool {
+    func isValid(cacheItem: CacheItem<Value>) -> Bool {
         let lifeTime = cacheItem.timestamp + timeUnit
         return lifeTime > timeProvider.currentTimeMillis()
     }
 
 }
 
-
-class CachePolicyVersion<K, V : Identifiable<K>> : CachePolicy<K, V> {
+class CachePolicyVersion<K: Hashable, V: Codable> : CachePolicyProtocol {
 
     private var version: Int
 
@@ -27,12 +34,11 @@ class CachePolicyVersion<K, V : Identifiable<K>> : CachePolicy<K, V> {
         self.version = version
     }
 
-    override func isValid(cacheItem: CacheItem<V>) -> Bool {
+    override func isValid(cacheItem: CacheItem<Value>) -> Bool {
         return version <= cacheItem.version
     }
 
 }
-
 
 class TimeProvider {
 
@@ -41,4 +47,3 @@ class TimeProvider {
     }
 
 }
-

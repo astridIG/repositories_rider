@@ -1,20 +1,12 @@
-//
-//  CacheItem.swift
-//  repositories
-//
-//  Created by Astrid on 22/8/17.
-//  Copyright © 2017 Astrid. All rights reserved.
-//
-
 import Foundation
 
-class CacheItem<T> {
+class CacheItem<V: Codable> {
 
-    var value: T
+    var value: V
     var version: Int
     var timestamp: Double
 
-    init(value: T,
+    init(value: V,
          version: Int,
          timestamp:  Double) {
         self.value = value
