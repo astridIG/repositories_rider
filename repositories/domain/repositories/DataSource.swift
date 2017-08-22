@@ -1,11 +1,11 @@
 import Foundation
 
 protocol ReadableDataSourceProtocol {
-    associatedtype K: Hashable
-    associatedtype V: Codable
+    associatedtype Key: Hashable
+    associatedtype Value: Codable
 
-    func getByKey(key: K) -> V?
-    func getAll() -> [V]?
+    func getByKey(key: Key) -> Value?
+    func getAll() -> [Value]?
 }
 
 class ReadableDataSource<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol {
@@ -14,36 +14,37 @@ class ReadableDataSource<Key: Hashable, Value: Codable>: ReadableDataSourceProto
 }
 
 protocol WritableDataSourceProtocol {
-    associatedtype K: Hashable
-    associatedtype V: Codable
+    associatedtype Key: Hashable
+    associatedtype Value: Codable
 
-    func addOrUpdate(value: V) -> V?
-    func addOrUpdateAll(values: [V]) -> [V]?
-    func deleteByKey(key: K)
+    func addOrUpdate(value: Value) -> Value?
+    func addOrUpdateAll(values: [Value]) -> [Value]?
+    func deleteByKey(key: Key)
     func deleteAll()
 }
 
-class WriteableDataSource<K: Hashable, V: Codable>: WritableDataSourceProtocol {
-    func addOrUpdate(value: V) -> V? { fatalError("Must override") }
-    func addOrUpdateAll(values: [V]) -> [V]? { fatalError("Must override") }
-    func deleteByKey(key: K) { fatalError("Must override") }
+class WriteableDataSource<Key: Hashable, Value: Codable>: WritableDataSourceProtocol {
+    func addOrUpdate(value: Value) -> Value? { fatalError("Must override") }
+    func addOrUpdateAll(values: [Value]) -> [Value]? { fatalError("Must override") }
+    func deleteByKey(key: Key) { fatalError("Must override") }
     func deleteAll() { fatalError("Must override") }
 }
 
 protocol CacheDataSourceProtocol: ReadableDataSourceProtocol, WritableDataSourceProtocol {
-//    var policies: [CachePolicy<K, V>] { get }
-    func isValid(value: V) -> Bool
+    var policies: [CachePolicy<Value>] { get set }
+    func isValid(value: Value) -> Bool
 }
 
-class CacheDataSource<K: Hashable, V: Codable>: CacheDataSourceProtocol {
-//    var policies: [CachePolicy<K, V>]
-    func getByKey(key: K) -> V? { fatalError("Must override") }
-    func getAll() -> [V]? { fatalError("Must override") }
+class CacheDataSource<Key: Hashable, Value: Codable>: CacheDataSourceProtocol {
+    var policies: [CachePolicy<Value>] = []
 
-    func addOrUpdate(value: V) -> V? { fatalError("Must override") }
-    func addOrUpdateAll(values: [V]) -> [V]? { fatalError("Must override") }
-    func deleteByKey(key: K) { fatalError("Must override") }
+    func getByKey(key: Key) -> Value? { fatalError("Must override") }
+    func getAll() -> [Value]? { fatalError("Must override") }
+
+    func addOrUpdate(value: Value) -> Value? { fatalError("Must override") }
+    func addOrUpdateAll(values: [Value]) -> [Value]? { fatalError("Must override") }
+    func deleteByKey(key: Key) { fatalError("Must override") }
     func deleteAll() { fatalError("Must override") }
 
-    func isValid(value: V) -> Bool { fatalError("Must override") }
+    func isValid(value: Value) -> Bool { fatalError("Must override") }
 }

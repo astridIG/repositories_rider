@@ -1,17 +1,10 @@
 import Foundation
 
-protocol CachePolicyProtocol {
-    associatedtype Key: Hashable
-    associatedtype Value: Codable
-
-    func isValid(cacheItem: CacheItem<Value>) -> Bool
-}
-
-class CachePolicy<Key: Hashable, Value: Codable>: CachePolicyProtocol {
+class CachePolicy<Value: Codable>: CachePolicyProtocol {
     func isValid(cacheItem: CacheItem<Value>) -> Bool  { fatalError("Must override") }
 }
 
-class CachePolicyTtl<Key, Value: Codable>: CachePolicy<Key ,Value> where Value.Key == Key {
+class CachePolicyTtl<Value: Codable>: CachePolicy<Value> {
 
     private var ttl: Int
     private var timeUnit: TimeInterval
@@ -30,7 +23,7 @@ class CachePolicyTtl<Key, Value: Codable>: CachePolicy<Key ,Value> where Value.K
 
 }
 
-class CachePolicyVersion<Key, Value: Codable>: CachePolicy<Key ,Value> where Value.Key == Key {
+class CachePolicyVersion<Value: Codable>: CachePolicy<Value> {
 
     private var version: Int
 

@@ -1,8 +1,5 @@
 import Foundation
 
-/*
- Value to specify modifiers over the retrieval operations on repositories and data sources.
-*/
 enum  ReadPolicy {
     case cacheOnly
     case readableOnly
