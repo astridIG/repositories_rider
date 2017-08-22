@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		007F84821F4C18510011F55F /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84811F4C18510011F55F /* BaseRepository.swift */; };
+		007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84831F4C1D4D0011F55F /* DataSource.swift */; };
 		009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF691F4C10BD0050AE20 /* AppDelegate.swift */; };
 		009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF6B1F4C10BD0050AE20 /* ViewController.swift */; };
 		009CCF6F1F4C10BD0050AE20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009CCF6D1F4C10BD0050AE20 /* Main.storyboard */; };
@@ -14,6 +16,7 @@
 		009CCF741F4C10BD0050AE20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009CCF721F4C10BD0050AE20 /* LaunchScreen.storyboard */; };
 		009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */; };
 		009CCF8A1F4C10BD0050AE20 /* repositoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF891F4C10BD0050AE20 /* repositoriesUITests.swift */; };
+		009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF9A1F4C15080050AE20 /* Policies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		007F84811F4C18510011F55F /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
+		007F84831F4C1D4D0011F55F /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		009CCF661F4C10BD0050AE20 /* repositories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repositories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		009CCF691F4C10BD0050AE20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		009CCF6B1F4C10BD0050AE20 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 		009CCF851F4C10BD0050AE20 /* repositoriesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = repositoriesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		009CCF891F4C10BD0050AE20 /* repositoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repositoriesUITests.swift; sourceTree = "<group>"; };
 		009CCF8B1F4C10BD0050AE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		009CCF9A1F4C15080050AE20 /* Policies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +103,7 @@
 		009CCF681F4C10BD0050AE20 /* repositories */ = {
 			isa = PBXGroup;
 			children = (
+				009CCF971F4C14CE0050AE20 /* domain */,
 				009CCF691F4C10BD0050AE20 /* AppDelegate.swift */,
 				009CCF6B1F4C10BD0050AE20 /* ViewController.swift */,
 				009CCF6D1F4C10BD0050AE20 /* Main.storyboard */,
@@ -123,6 +130,24 @@
 				009CCF8B1F4C10BD0050AE20 /* Info.plist */,
 			);
 			path = repositoriesUITests;
+			sourceTree = "<group>";
+		};
+		009CCF971F4C14CE0050AE20 /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				009CCF981F4C14E10050AE20 /* repositories */,
+			);
+			path = domain;
+			sourceTree = "<group>";
+		};
+		009CCF981F4C14E10050AE20 /* repositories */ = {
+			isa = PBXGroup;
+			children = (
+				009CCF9A1F4C15080050AE20 /* Policies.swift */,
+				007F84811F4C18510011F55F /* BaseRepository.swift */,
+				007F84831F4C1D4D0011F55F /* DataSource.swift */,
+			);
+			path = repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +282,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */,
+				009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */,
+				007F84821F4C18510011F55F /* BaseRepository.swift in Sources */,
+				007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */,
 				009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
