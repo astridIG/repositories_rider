@@ -2,11 +2,12 @@ class InMemoryCacheDataSource<K, V: Codable>: CacheDataSource<K,V> where V.Key =
 
     var version: Int
     var timeProvider: TimeProvider
-    var policies : [CachePolicy<K, V>]
 
-    init(version: Int, timeProvider: TimeProvider, policies : [CachePolicy<K,V>]) {
+    init(version: Int, timeProvider: TimeProvider, policies : [CachePolicy<V>]) {
         self.version = version
         self.timeProvider = timeProvider
+        super.init()
+
         self.policies = policies
     }
 

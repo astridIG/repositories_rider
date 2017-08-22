@@ -1,30 +1,30 @@
 import Foundation
 
-class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, WritableDataSourceProtocol {
+class BaseRepository<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol, WritableDataSourceProtocol {
 
-    private var readableDataSources = [ReadableDataSource<K, V>]()
-    private var writableDataSources = [WriteableDataSource<K, V>]()
-    private var cacheDataSources = [CacheDataSource<K, V>]()
+    private var readableDataSources = [ReadableDataSource<Key, Value>]()
+    private var writableDataSources = [WriteableDataSource<Key, Value>]()
+    private var cacheDataSources = [CacheDataSource<Key, Value>]()
 
-    func addReadablaDataSource(readableDataSources: ReadableDataSource<K, V>) {
+    func addReadablaDataSource(readableDataSources: ReadableDataSource<Key, Value>) {
         self.readableDataSources.append(readableDataSources)
     }
 
-    func addWritableDataSources(writableDataSources: WriteableDataSource<K, V>) {
+    func addWritableDataSources(writableDataSources: WriteableDataSource<Key, Value>) {
         self.writableDataSources.append(writableDataSources)
     }
 
-    func addCacheDataSources(cacheDataSources: CacheDataSource<K, V>) {
+    func addCacheDataSources(cacheDataSources: CacheDataSource<Key, Value>) {
         self.cacheDataSources.append(cacheDataSources)
     }
 
     // MARK: ReadableDataSourceProtocol
-    func getByKey(key: K) -> V? {
+    func getByKey(key: Key) -> Value? {
         return getByKey(key: key, policy: ReadPolicy.readAll)
     }
 
-    func getByKey(key: K, policy: ReadPolicy) -> V? {
-        var value: V? = nil
+    func getByKey(key: Key, policy: ReadPolicy) -> Value? {
+        var value: Value? = nil
 
         if (policy.useCache()) {
             value = getValueFromCaches(id: key)
@@ -41,12 +41,12 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return value
     }
 
-    func getAll() -> [V]? {
+    func getAll() -> [Value]? {
         return getAll(policy: ReadPolicy.readAll)
     }
 
-    func getAll(policy: ReadPolicy) -> [V]? {
-        var values: [V]? = nil
+    func getAll(policy: ReadPolicy) -> [Value]? {
+        var values: [Value]? = nil
 
         if (policy.useCache()) {
             values = valuesFromCaches
@@ -64,8 +64,8 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
     }
 
     // MARK: WritableDataSourceProtocol
-    func addOrUpdate(value: V) -> V? {
-        var updatedValue: V? = nil
+    func addOrUpdate(value: Value) -> Value? {
+        var updatedValue: Value? = nil
 
         for writableDataSource in writableDataSources {
             updatedValue = writableDataSource.addOrUpdate(value: value)
@@ -78,8 +78,8 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return updatedValue
     }
 
-    func addOrUpdateAll(values: [V]) -> [V]? {
-        var updatedValues: [V]? = nil
+    func addOrUpdateAll(values: [Value]) -> [Value]? {
+        var updatedValues: [Value]? = nil
 
         for writableDataSource in writableDataSources {
             updatedValues = writableDataSource.addOrUpdateAll(values: values)
@@ -92,7 +92,7 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return updatedValues
     }
 
-    func deleteByKey(key: K) {
+    func deleteByKey(key: Key) {
         writableDataSources.forEach { writableDataSource in
             writableDataSource.deleteByKey(key: key)
         }
@@ -111,8 +111,8 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
     }
 
     // MARK: Private
-    private func getValueFromCaches(id: K) -> V? {
-        var value: V? = nil
+    private func getValueFromCaches(id: Key) -> Value? {
+        var value: Value? = nil
 
       for cacheDataSource in cacheDataSources {
         value = cacheDataSource.getByKey(key: id)
@@ -129,8 +129,8 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return value
     }
 
-    private func getValueFromReadables(key: K) -> V? {
-        var value: V? = nil
+    private func getValueFromReadables(key: Key) -> Value? {
+        var value: Value? = nil
 
         for readableDataSource in readableDataSources {
             value = readableDataSource.getByKey(key: key)
@@ -143,9 +143,9 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return value
     }
 
-    private var valuesFromCaches: [V]? {
+    private var valuesFromCaches: [Value]? {
         get {
-            var values: [V]? = nil
+            var values: [Value]? = nil
 
             for cacheDataSource in cacheDataSources.reversed() {
                 values = cacheDataSource.getAll()
@@ -164,8 +164,8 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         }
     }
 
-    private var valuesFromReadables: [V]? {
-        var values: [V]? = nil
+    private var valuesFromReadables: [Value]? {
+        var values: [Value]? = nil
 
         for readableDataSource in readableDataSources {
             values = readableDataSource.getAll()
@@ -178,7 +178,7 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         return values
     }
 
-    private func populateCaches(value: V) {
+    private func populateCaches(value: Value) {
         cacheDataSources.forEach { cacheDataSource in
             let _ = cacheDataSource.addOrUpdate(value: value)
         }
@@ -189,17 +189,15 @@ class BaseRepository<K: Hashable, V: Codable>: ReadableDataSourceProtocol, Writa
         }
     }
 
-    private func populateCaches(values: [V]) {
+    private func populateCaches(values: [Value]) {
         cacheDataSources.forEach { cacheDataSource in
             let _ = cacheDataSource.addOrUpdateAll(values: values)
         }
     }
 
-    private func areValidValues(values: [V], cacheDataSource: CacheDataSource<K, V>) -> Bool {
-//        return values.forEach { value in
-//            cacheDataSource.isValid(value: value)
-//        }
-        return true
+    private func areValidValues(values: [Value], cacheDataSource: CacheDataSource<Key, Value>) -> Bool {
+        return values.reduce(true) { (result, value) in
+            return result && cacheDataSource.isValid(value: value)
+        }
     }
 }
-
