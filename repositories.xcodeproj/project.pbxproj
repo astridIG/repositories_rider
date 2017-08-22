@@ -12,7 +12,6 @@
 		0049024F1F4C42C2004C1411 /* CachePolicies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049024E1F4C42C2004C1411 /* CachePolicies.swift */; };
 		004902511F4C4552004C1411 /* CacheItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902501F4C4552004C1411 /* CacheItem.swift */; };
 		004902531F4C4A47004C1411 /* CachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902521F4C4A47004C1411 /* CachePolicy.swift */; };
-		004902561F4C6893004C1411 /* SQLiteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004902551F4C6893004C1411 /* SQLiteDataSource.swift */; };
 		007F84821F4C18510011F55F /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84811F4C18510011F55F /* BaseRepository.swift */; };
 		007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007F84831F4C1D4D0011F55F /* DataSource.swift */; };
 		009CCF6A1F4C10BD0050AE20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF691F4C10BD0050AE20 /* AppDelegate.swift */; };
@@ -23,6 +22,8 @@
 		009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */; };
 		009CCF8A1F4C10BD0050AE20 /* repositoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF891F4C10BD0050AE20 /* repositoriesUITests.swift */; };
 		009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF9A1F4C15080050AE20 /* Policies.swift */; };
+		E401DA3A1F4C6ADE00C30BAC /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA391F4C6ADE00C30BAC /* Codable.swift */; };
+		E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3B1F4C6B4D00C30BAC /* example.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +49,6 @@
 		0049024E1F4C42C2004C1411 /* CachePolicies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicies.swift; sourceTree = "<group>"; };
 		004902501F4C4552004C1411 /* CacheItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheItem.swift; sourceTree = "<group>"; };
 		004902521F4C4A47004C1411 /* CachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
-		004902551F4C6893004C1411 /* SQLiteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDataSource.swift; sourceTree = "<group>"; };
 		007F84811F4C18510011F55F /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
 		007F84831F4C1D4D0011F55F /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		009CCF661F4C10BD0050AE20 /* repositories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repositories.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +65,8 @@
 		009CCF891F4C10BD0050AE20 /* repositoriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repositoriesUITests.swift; sourceTree = "<group>"; };
 		009CCF8B1F4C10BD0050AE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		009CCF9A1F4C15080050AE20 /* Policies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policies.swift; sourceTree = "<group>"; };
+		E401DA391F4C6ADE00C30BAC /* Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
+		E401DA3B1F4C6B4D00C30BAC /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = example.swift; path = repositories/example.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,14 +103,6 @@
 			path = data;
 			sourceTree = "<group>";
 		};
-		004902541F4C6866004C1411 /* sql */ = {
-			isa = PBXGroup;
-			children = (
-				004902551F4C6893004C1411 /* SQLiteDataSource.swift */,
-			);
-			path = sql;
-			sourceTree = "<group>";
-		};
 		009CCF5D1F4C10BC0050AE20 = {
 			isa = PBXGroup;
 			children = (
@@ -132,7 +126,6 @@
 		009CCF681F4C10BD0050AE20 /* repositories */ = {
 			isa = PBXGroup;
 			children = (
-				004902541F4C6866004C1411 /* sql */,
 				0049024B1F4C4265004C1411 /* data */,
 				009CCF971F4C14CE0050AE20 /* domain */,
 				009CCF691F4C10BD0050AE20 /* AppDelegate.swift */,
@@ -167,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				009CCF981F4C14E10050AE20 /* repositories */,
+				E401DA3B1F4C6B4D00C30BAC /* example.swift */,
 			);
 			path = domain;
 			sourceTree = "<group>";
@@ -180,6 +174,7 @@
 				004902491F4C40AC004C1411 /* Identifiable.swift */,
 				004902501F4C4552004C1411 /* CacheItem.swift */,
 				004902521F4C4A47004C1411 /* CachePolicy.swift */,
+				E401DA391F4C6ADE00C30BAC /* Codable.swift */,
 			);
 			path = repositories;
 			sourceTree = "<group>";
@@ -315,13 +310,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */,
 				009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */,
 				0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */,
 				0049024F1F4C42C2004C1411 /* CachePolicies.swift in Sources */,
 				004902511F4C4552004C1411 /* CacheItem.swift in Sources */,
-				004902561F4C6893004C1411 /* SQLiteDataSource.swift in Sources */,
 				0049024D1F4C42B3004C1411 /* InMemoryCacheDataSource.swift in Sources */,
 				009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */,
+				E401DA3A1F4C6ADE00C30BAC /* Codable.swift in Sources */,
 				007F84821F4C18510011F55F /* BaseRepository.swift in Sources */,
 				007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */,
 				004902531F4C4A47004C1411 /* CachePolicy.swift in Sources */,

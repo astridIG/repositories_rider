@@ -1,19 +1,49 @@
-//
-//  DataSource.swift
-
-// Data source interface meant to be used only to retrieve data.
-//
-// @param <K> The class of the key used by this data source.
-// @param <V> The class of the values retrieved from this data source.
-//
 import Foundation
 
-class ReadableDataSource<K, V> {
-    func getByKey(key: K) -> V? {
-        fatalError("Readable data source needs getByKey method")
-    }
+protocol ReadableDataSourceProtocol {
+    associatedtype K: Hashable
+    associatedtype V: Codable
 
-    func getAll() -> [V]? {
-        fatalError("Readable data source needs getAll method")
-    }
+    func getByKey(key: K) -> V?
+    func getAll() -> [V]?
+}
+
+class ReadableDataSource<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol {
+    func getByKey(key: Key) -> Value? { fatalError("Must override") }
+    func getAll() -> [Value]? { fatalError("Must override") }
+}
+
+protocol WritableDataSourceProtocol {
+    associatedtype K: Hashable
+    associatedtype V: Codable
+
+    func addOrUpdate(value: V) -> V?
+    func addOrUpdateAll(values: [V]) -> [V]?
+    func deleteByKey(key: K)
+    func deleteAll()
+}
+
+class WriteableDataSource<K: Hashable, V: Codable>: WritableDataSourceProtocol {
+    func addOrUpdate(value: V) -> V? { fatalError("Must override") }
+    func addOrUpdateAll(values: [V]) -> [V]? { fatalError("Must override") }
+    func deleteByKey(key: K) { fatalError("Must override") }
+    func deleteAll() { fatalError("Must override") }
+}
+
+protocol CacheDataSourceProtocol: ReadableDataSourceProtocol, WritableDataSourceProtocol {
+//    var policies: [CachePolicy<K, V>] { get }
+    func isValid(value: V) -> Bool
+}
+
+class CacheDataSource<K: Hashable, V: Codable>: CacheDataSourceProtocol {
+//    var policies: [CachePolicy<K, V>]
+    func getByKey(key: K) -> V? { fatalError("Must override") }
+    func getAll() -> [V]? { fatalError("Must override") }
+
+    func addOrUpdate(value: V) -> V? { fatalError("Must override") }
+    func addOrUpdateAll(values: [V]) -> [V]? { fatalError("Must override") }
+    func deleteByKey(key: K) { fatalError("Must override") }
+    func deleteAll() { fatalError("Must override") }
+
+    func isValid(value: V) -> Bool { fatalError("Must override") }
 }
