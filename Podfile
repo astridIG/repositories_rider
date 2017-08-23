@@ -6,16 +6,11 @@ target 'repositories' do
   use_frameworks!
 
   pod 'FMDB', '~> 2.7.2'
+  pod 'RxSwift', '~> 3.5'
   # Pods for repositories
 
   target 'repositoriesTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
-  target 'repositoriesUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end
