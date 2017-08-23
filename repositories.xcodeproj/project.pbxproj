@@ -27,6 +27,7 @@
 		E401DA3A1F4C6ADE00C30BAC /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA391F4C6ADE00C30BAC /* Codable.swift */; };
 		E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3B1F4C6B4D00C30BAC /* example.swift */; };
 		E401DA3E1F4D664200C30BAC /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */; };
+		E401DA401F4D7F9900C30BAC /* ReactiveRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		E401DA391F4C6ADE00C30BAC /* Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
 		E401DA3B1F4C6B4D00C30BAC /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = example.swift; path = repositories/example.swift; sourceTree = SOURCE_ROOT; };
 		E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
+		E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				004902501F4C4552004C1411 /* CacheItem.swift */,
 				004902521F4C4A47004C1411 /* CachePolicy.swift */,
 				E401DA391F4C6ADE00C30BAC /* Codable.swift */,
+				E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */,
 			);
 			path = repositories;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				004902561F4C6893004C1411 /* SQLiteDataSource.swift in Sources */,
 				0049024D1F4C42B3004C1411 /* InMemoryCacheDataSource.swift in Sources */,
 				009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */,
+				E401DA401F4D7F9900C30BAC /* ReactiveRepository.swift in Sources */,
 				E401DA3A1F4C6ADE00C30BAC /* Codable.swift in Sources */,
 				007F84821F4C18510011F55F /* BaseRepository.swift in Sources */,
 				007F84841F4C1D4D0011F55F /* DataSource.swift in Sources */,

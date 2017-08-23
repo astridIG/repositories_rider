@@ -92,22 +92,30 @@ class BaseRepository<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol,
         return updatedValues
     }
 
-    func deleteByKey(key: Key) {
+    func deleteByKey(key: Key) -> Bool {
+        var writableDeleted: Bool?
+        var cacheDeleted: Bool?
+
         writableDataSources.forEach { writableDataSource in
-            writableDataSource.deleteByKey(key: key)
+            writableDeleted = writableDataSource.deleteByKey(key: key)
         }
         cacheDataSources.forEach { cacheDataSource in
-            cacheDataSource.deleteByKey(key: key)
+            cacheDeleted = cacheDataSource.deleteByKey(key: key)
         }
+        return writableDeleted! && cacheDeleted!
     }
 
-    func deleteAll() {
+    func deleteAll() -> Bool {
+        var writableDeleted: Bool?
+        var cacheDeleted: Bool?
+
         writableDataSources.forEach { writableDataSource in
-            writableDataSource.deleteAll()
+            writableDeleted = writableDataSource.deleteAll()
         }
         cacheDataSources.forEach { cacheDataSource in
-            cacheDataSource.deleteAll()
+            cacheDeleted = cacheDataSource.deleteAll()
         }
+        return writableDeleted! && cacheDeleted!
     }
 
     // MARK: Private
@@ -121,7 +129,7 @@ class BaseRepository<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol,
                 if (cacheDataSource.isValid(value: val)) {
                     break
                 } else {
-                    cacheDataSource.deleteByKey(key: id)
+                    let _ = cacheDataSource.deleteByKey(key: id)
                     value = nil
                 }
             }
@@ -154,7 +162,7 @@ class BaseRepository<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol,
                     if areValidValues(values: val, cacheDataSource: cacheDataSource) {
                         break
                     } else {
-                        cacheDataSource.deleteAll()
+                        let _ = cacheDataSource.deleteAll()
                         values = nil
                     }
                 }

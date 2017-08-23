@@ -40,12 +40,14 @@ class InMemoryCacheDataSource<K, V: Codable>: CacheDataSource<K,V> where V.Key =
         return values
     }
 
-    override func deleteByKey(key: K) {
+    override func deleteByKey(key: K) -> Bool {
         items.removeValue(forKey: key)
+        return true
     }
 
-    override func deleteAll() {
+    override func deleteAll() -> Bool {
         items.removeAll()
+        return true
     }
 
     override func isValid(value: V) -> Bool {
