@@ -38,7 +38,7 @@ struct SQLiteRuntimeConfiguration {
     }
 }
 
-class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Value.Key == Key {
+class SQLiteDataSource<Key, Value: CodableProtocol> : BaseRepository<Key,Value> where Value.Key == Key {
 
     private let dbPath: String
     let version: Int
@@ -254,7 +254,7 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
         }
     }
 
-    override public func deleteByKey(key: Key) {
+    override public func deleteByKey(key: Key) -> Bool {
         queue.inTransaction { db, rollback in
             do {
                 try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
@@ -270,12 +270,16 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
                 rollback.pointee = true
             }
         }
+
+        return true
     }
 
-    override public func deleteAll() {
+    override public func deleteAll() -> Bool {
         queue.inTransaction { db, rollback in
             self.doDeleteAll(db: db, rollback: rollback)
         }
+
+        return true
     }
 
     private func doDeleteAll(db: FMDatabase!, rollback: UnsafeMutablePointer<ObjCBool>) {

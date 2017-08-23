@@ -1,6 +1,6 @@
 import Foundation
 
-class User: Codable {
+class User: CodableProtocol {
     func getKey() -> String {
         return self.id
     }
@@ -27,7 +27,7 @@ class User: Codable {
     }
 }
 
-class DiskDataSource<K, V: Codable>: CacheDataSource<K,V> where V.Key == K {
+class DiskDataSource<K, V: CodableProtocol>: CacheDataSource<K,V> where V.Key == K {
 
     private var sqlFake: [K: [K: Any]] = [:]
 

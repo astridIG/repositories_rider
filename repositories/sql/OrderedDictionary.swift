@@ -24,7 +24,7 @@
 
 import Foundation
 
-struct OrderedDictionary<Key: Hashable, Value: Codable>: Sequence, CustomStringConvertible {
+struct OrderedDictionary<Key: Hashable, Value: CodableProtocol>: Sequence, CustomStringConvertible {
 
     var keyStorage: Array<Key> = []
     var pairStorage: Dictionary<Key, Value> = [:]

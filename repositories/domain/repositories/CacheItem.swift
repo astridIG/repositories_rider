@@ -1,6 +1,6 @@
 import Foundation
 
-class CacheItem<Value: Codable> {
+class CacheItem<Value: CodableProtocol> {
 
     var value: Value
     var version: Int

@@ -6,7 +6,7 @@ enum RepositoryError: Error {
     case unknown
 }
 
-class ReactiveBaseRepository<Key: Hashable, Value: Codable> : BaseRepository<Key, Value> {
+class ReactiveBaseRepository<Key: Hashable, Value: CodableProtocol> : BaseRepository<Key, Value> {
 
     func getByKeyReactive(key: Key) -> Observable<Value> {
         return getByKeyReactive(key: key, policy: ReadPolicy.readAll)

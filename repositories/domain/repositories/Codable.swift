@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Codable: Identifiable {
+protocol CodableProtocol: Identifiable {
     init?(jsonDictionary: [Key: Any])
 
     func toJson() -> [Key: Any]

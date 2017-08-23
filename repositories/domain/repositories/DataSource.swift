@@ -2,20 +2,20 @@ import Foundation
 
 protocol ReadableDataSourceProtocol {
     associatedtype Key: Hashable
-    associatedtype Value: Codable
+    associatedtype Value: CodableProtocol
 
     func getByKey(key: Key) -> Value?
     func getAll() -> [Value]?
 }
 
-class ReadableDataSource<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol {
+class ReadableDataSource<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceProtocol {
     func getByKey(key: Key) -> Value? { fatalError("Must override") }
     func getAll() -> [Value]? { fatalError("Must override") }
 }
 
 protocol WritableDataSourceProtocol {
     associatedtype Key: Hashable
-    associatedtype Value: Codable
+    associatedtype Value: CodableProtocol
 
     func addOrUpdate(value: Value) -> Value?
     func addOrUpdateAll(values: [Value]) -> [Value]?
@@ -23,7 +23,7 @@ protocol WritableDataSourceProtocol {
     func deleteAll() -> Bool
 }
 
-class WriteableDataSource<Key: Hashable, Value: Codable>: WritableDataSourceProtocol {
+class WriteableDataSource<Key: Hashable, Value: CodableProtocol>: WritableDataSourceProtocol {
     func addOrUpdate(value: Value) -> Value? { fatalError("Must override") }
     func addOrUpdateAll(values: [Value]) -> [Value]? { fatalError("Must override") }
     func deleteByKey(key: Key) -> Bool { fatalError("Must override") }
@@ -35,7 +35,7 @@ protocol CacheDataSourceProtocol: ReadableDataSourceProtocol, WritableDataSource
     func isValid(value: Value) -> Bool
 }
 
-class CacheDataSource<Key: Hashable, Value: Codable>: CacheDataSourceProtocol {
+class CacheDataSource<Key: Hashable, Value: CodableProtocol>: CacheDataSourceProtocol {
     var policies: [CachePolicy<Value>] = []
 
     func getByKey(key: Key) -> Value? { fatalError("Must override") }
