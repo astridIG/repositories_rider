@@ -1,6 +1,0 @@
-framework module Pods_repositoriesUITests {
-  umbrella header "Pods-repositoriesUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
