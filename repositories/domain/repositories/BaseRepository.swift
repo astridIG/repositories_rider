@@ -6,16 +6,16 @@ class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceP
     private var writableDataSources = [WriteableDataSource<Key, Value>]()
     private var cacheDataSources = [CacheDataSource<Key, Value>]()
 
-    func addReadablaDataSource(readableDataSources: ReadableDataSource<Key, Value>) {
-        self.readableDataSources.append(readableDataSources)
+    func addReadableDataSources(readableDataSources: [ReadableDataSource<Key, Value>]) {
+        self.readableDataSources += readableDataSources
     }
 
-    func addWritableDataSources(writableDataSources: WriteableDataSource<Key, Value>) {
-        self.writableDataSources.append(writableDataSources)
+    func addWritableDataSources(writableDataSources: [WriteableDataSource<Key, Value>]) {
+        self.writableDataSources += writableDataSources
     }
 
-    func addCacheDataSources(cacheDataSources: CacheDataSource<Key, Value>) {
-        self.cacheDataSources.append(cacheDataSources)
+    func addCacheDataSources(cacheDataSources: [CacheDataSource<Key, Value>]) {
+        self.cacheDataSources += cacheDataSources
     }
 
     // MARK: ReadableDataSourceProtocol
