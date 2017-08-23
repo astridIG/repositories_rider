@@ -28,6 +28,8 @@
 		E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3B1F4C6B4D00C30BAC /* example.swift */; };
 		E401DA3E1F4D664200C30BAC /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */; };
 		E401DA401F4D7F9900C30BAC /* ReactiveRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */; };
+		E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA421F4D960800C30BAC /* RepositoryMother.swift */; };
+		E401DA451F4DAA6400C30BAC /* DataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		E401DA3B1F4C6B4D00C30BAC /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = example.swift; path = repositories/example.swift; sourceTree = SOURCE_ROOT; };
 		E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRepository.swift; sourceTree = "<group>"; };
+		E401DA421F4D960800C30BAC /* RepositoryMother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryMother.swift; sourceTree = "<group>"; };
+		E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,7 @@
 		009CCF7D1F4C10BD0050AE20 /* repositoriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				E401DA411F4D954A00C30BAC /* domain */,
 				009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */,
 				009CCF801F4C10BD0050AE20 /* Info.plist */,
 			);
@@ -203,6 +208,15 @@
 				AE37704F025BC24B2F0CA414 /* Pods_repositoriesUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E401DA411F4D954A00C30BAC /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				E401DA421F4D960800C30BAC /* RepositoryMother.swift */,
+				E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */,
+			);
+			path = domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,7 +441,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */,
 				009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */,
+				E401DA451F4DAA6400C30BAC /* DataSourceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,11 +1,3 @@
-//
-//  repositoriesTests.swift
-//  repositoriesTests
-//
-//  Created by Astrid on 22/8/17.
-//  Copyright © 2017 Astrid. All rights reserved.
-//
-
 import XCTest
 @testable import repositories
 

@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 
 enum RepositoryError: Error {
+    case elementNotFound
     case unknown
 }
 
@@ -19,7 +20,7 @@ class ReactiveBaseRepository<Key: Hashable, Value: Codable> : BaseRepository<Key
                 observer.onNext(item)
                 observer.onCompleted()
             } else {
-                observer.onError(RepositoryError.unknown)
+                observer.onError(RepositoryError.elementNotFound)
             }
             return Disposables.create()
         })
@@ -37,7 +38,7 @@ class ReactiveBaseRepository<Key: Hashable, Value: Codable> : BaseRepository<Key
                 observer.onNext(allItems)
                 observer.onCompleted()
             } else {
-                observer.onError(RepositoryError.unknown)
+                observer.onError(RepositoryError.elementNotFound)
             }
             return Disposables.create()
         })
