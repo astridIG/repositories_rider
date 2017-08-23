@@ -1,10 +1,10 @@
 import Foundation
 
-class CachePolicy<Value: Codable>: CachePolicyProtocol {
+class CachePolicy<Value: CodableProtocol>: CachePolicyProtocol {
     func isValid(cacheItem: CacheItem<Value>) -> Bool  { fatalError("Must override") }
 }
 
-class CachePolicyTtl<Value: Codable>: CachePolicy<Value> {
+class CachePolicyTtl<Value: CodableProtocol>: CachePolicy<Value> {
 
     private var ttl: Int
     private var timeUnit: TimeInterval
@@ -23,7 +23,7 @@ class CachePolicyTtl<Value: Codable>: CachePolicy<Value> {
 
 }
 
-class CachePolicyVersion<Value: Codable>: CachePolicy<Value> {
+class CachePolicyVersion<Value: CodableProtocol>: CachePolicy<Value> {
 
     private var version: Int
 

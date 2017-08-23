@@ -1,6 +1,7 @@
-import Foundation
-@testable import repositories
+//import Foundation
+//@testable import repositories
+//
+//class ReadableDataSourceMock<Key, Value: Codable>:  ReadableDataSource<Key, Value>  where Value.Key == Key {
+//
+//}
 
-class ReadableDataSourceMock<Key, Value: Codable>:  ReadableDataSource<Key, Value>  where Value.Key == Key {
-
-}

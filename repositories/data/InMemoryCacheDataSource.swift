@@ -1,4 +1,4 @@
-class InMemoryCacheDataSource<K, V: Codable>: CacheDataSource<K,V> where V.Key == K {
+class InMemoryCacheDataSource<K, V: CodableProtocol>: CacheDataSource<K,V> where V.Key == K {
 
     var version: Int
     var timeProvider: TimeProvider

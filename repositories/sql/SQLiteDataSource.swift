@@ -38,7 +38,7 @@ struct SQLiteRuntimeConfiguration {
     }
 }
 
-class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Value.Key == Key {
+class SQLiteDataSource<Key, Value: CodableProtocol> : BaseRepository<Key,Value> where Value.Key == Key {
 
     private let dbPath: String
     let version: Int
@@ -201,13 +201,13 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
 
     // MARK: WritableDataSource
     override public func addOrUpdate(value: Value) -> Value? {
-        deleteAll()
+//        _ = deleteAll()
         append(items: [value])
         return value
     }
 
     override public func addOrUpdateAll(values: [Value]) -> [Value]? {
-        deleteAll()
+//        _ = deleteAll()
         append(items: values)
         return values
     }
@@ -232,8 +232,6 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
 
                         try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
                             let sql = "INSERT OR REPLACE INTO \(self.tableName) (id, item, version, updated) VALUES (?, ?, ?, ?)"
-
-
                             let values: [AnyObject] = [
                                 NSNumber(value: item.getKey().hashValue),
                                 jsonString as NSString,
@@ -254,7 +252,7 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
         }
     }
 
-    override public func deleteByKey(key: Key) {
+    override func deleteByKey(key: Key) -> Bool {
         queue.inTransaction { db, rollback in
             do {
                 try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
@@ -270,12 +268,14 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
                 rollback.pointee = true
             }
         }
+        return true
     }
 
-    override public func deleteAll() {
+    override func deleteAll() -> Bool {
         queue.inTransaction { db, rollback in
             self.doDeleteAll(db: db, rollback: rollback)
         }
+        return true
     }
 
     private func doDeleteAll(db: FMDatabase!, rollback: UnsafeMutablePointer<ObjCBool>) {
@@ -404,16 +404,16 @@ class SQLiteDataSource<Key, Value: Codable> : BaseRepository<Key,Value> where Va
         let version = result.int(forColumn: "version")
         let updated = result.double(forColumn: "updated")
 
-        let jsonDictionary = convertToKeyDictionary(text: itemString!)
+        let jsonDictionary = convertToDictionary(text: itemString!)
 
-        if let item = Value.init(jsonDictionary: jsonDictionary) {
+        if let item =  Value.init(jsonDictionary: jsonDictionary) {
             return CacheItem<Value>(value: item, version: Int(version), timestamp: updated)
         } else {
             return nil
         }
     }
 
-    func convertToKeyDictionary(text: String) -> [Key : Any] {
+    func convertToDictionary(text: String) -> [Key : Any] {
         if let data = text.data(using: .utf8) {
             do {
                 return (try JSONSerialization.jsonObject(with: data, options: []) as? [Key: String])!

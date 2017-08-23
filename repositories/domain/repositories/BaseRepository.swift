@@ -1,6 +1,6 @@
 import Foundation
 
-class BaseRepository<Key: Hashable, Value: Codable>: ReadableDataSourceProtocol, WritableDataSourceProtocol {
+class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceProtocol, WritableDataSourceProtocol {
 
     private var readableDataSources = [ReadableDataSource<Key, Value>]()
     private var writableDataSources = [WriteableDataSource<Key, Value>]()
