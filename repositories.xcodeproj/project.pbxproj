@@ -34,6 +34,7 @@
 		E401DA471F4DBB4500C30BAC /* BaseRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */; };
 		E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA481F4DC68900C30BAC /* TestValue.swift */; };
 		E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */; };
+		E4622A6A1F4F1C6900F82809 /* RespositoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4622A691F4F1C6900F82809 /* RespositoriesTests.swift */; };
 		E4BDC3511F4F14520001C470 /* ReactiveRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BDC3501F4F14520001C470 /* ReactiveRepositoryTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepositoryTest.swift; sourceTree = "<group>"; };
 		E401DA481F4DC68900C30BAC /* TestValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestValue.swift; sourceTree = "<group>"; };
 		E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Expectations.swift"; sourceTree = "<group>"; };
+		E4622A691F4F1C6900F82809 /* RespositoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespositoriesTests.swift; sourceTree = "<group>"; };
 		E4BDC3501F4F14520001C470 /* ReactiveRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRepositoryTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +165,7 @@
 				E401DA411F4D954A00C30BAC /* domain */,
 				009CCF801F4C10BD0050AE20 /* Info.plist */,
 				E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */,
+				E4622A691F4F1C6900F82809 /* RespositoriesTests.swift */,
 			);
 			path = repositoriesTests;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4622A6A1F4F1C6900F82809 /* RespositoriesTests.swift in Sources */,
 				E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */,
 				00ADC8D21F4F02E8009A5DE6 /* MemoryDataSourceTest.swift in Sources */,
 				E4BDC3511F4F14520001C470 /* ReactiveRepositoryTest.swift in Sources */,

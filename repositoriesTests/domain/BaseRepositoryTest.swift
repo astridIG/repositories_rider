@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 @testable import repositories
 
-class BaseRespositoryTest: XCTestCase {
+class BaseRespositoryTest: repositoriesTests {
 
     var readableDataSource = ReadableDataSourceMock<String, TestValue>()
     var writeableDataSource = WriteableDataSourceMock<String, TestValue>()
@@ -57,7 +57,7 @@ class BaseRespositoryTest: XCTestCase {
     func testShouldGetDataFromReadableDataSourceIfReadPolicyForcesOnlyReadable() {
         let _ = repositoryMother!.givenCacheDataSourceReturnsValidValues()
         let _ = repositoryMother!.givenReadableDataSourceReturnsValidValues()
-        let repository = repositoryMother?.givenAReadableAndCacheRepository()
+        let repository = repositoryMother!.givenAReadableAndCacheRepository()
 
         let expect = expectation(description: "Readable data source was called")
         readableDataSource.getAllCompletionBlock = {
@@ -69,7 +69,7 @@ class BaseRespositoryTest: XCTestCase {
             cacheGetAllCalled = true
         }
 
-        let _ = repository!.getAll(policy: ReadPolicy.readableOnly)
+        let _ = repository.getAll(policy: ReadPolicy.readableOnly)
 
         waitForExpectations()
         XCTAssertFalse(cacheGetAllCalled)
