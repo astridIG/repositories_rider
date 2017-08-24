@@ -11,6 +11,8 @@ target 'repositories' do
 
   target 'repositoriesTests' do
     inherit! :search_paths
+    pod 'RxTest', '~> 3.4'
+    pod 'RxBlocking', '~> 3.4'
     # Pods for testing
   end
 end
