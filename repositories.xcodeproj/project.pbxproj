@@ -20,13 +20,13 @@
 		009CCF6F1F4C10BD0050AE20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009CCF6D1F4C10BD0050AE20 /* Main.storyboard */; };
 		009CCF711F4C10BD0050AE20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 009CCF701F4C10BD0050AE20 /* Assets.xcassets */; };
 		009CCF741F4C10BD0050AE20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009CCF721F4C10BD0050AE20 /* LaunchScreen.storyboard */; };
-		009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */; };
 		009CCF9B1F4C15080050AE20 /* Policies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CCF9A1F4C15080050AE20 /* Policies.swift */; };
 		00A643C51F4EB5800078FEDA /* MemoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A643C41F4EB5800078FEDA /* MemoryDataSource.swift */; };
+		00ADC8D01F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ADC8CF1F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift */; };
+		00ADC8D21F4F02E8009A5DE6 /* MemoryDataSourceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00ADC8D11F4F02E8009A5DE6 /* MemoryDataSourceTest.swift */; };
 		67A9DC4A8DCE7549B82CF7F5 /* Pods_repositoriesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0497D76761A5FD52C1158426 /* Pods_repositoriesTests.framework */; };
 		D8F8AF2BDAF3DE3D09BB5A9C /* Pods_repositories.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590FDB1098851101F2AA48A0 /* Pods_repositories.framework */; };
 		E401DA3A1F4C6ADE00C30BAC /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA391F4C6ADE00C30BAC /* Codable.swift */; };
-		E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3B1F4C6B4D00C30BAC /* example.swift */; };
 		E401DA3E1F4D664200C30BAC /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */; };
 		E401DA401F4D7F9900C30BAC /* ReactiveRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */; };
 		E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA421F4D960800C30BAC /* RepositoryMother.swift */; };
@@ -63,10 +63,11 @@
 		009CCF731F4C10BD0050AE20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		009CCF751F4C10BD0050AE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		009CCF7A1F4C10BD0050AE20 /* repositoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = repositoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repositoriesTests.swift; sourceTree = "<group>"; };
 		009CCF801F4C10BD0050AE20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		009CCF9A1F4C15080050AE20 /* Policies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policies.swift; sourceTree = "<group>"; };
 		00A643C41F4EB5800078FEDA /* MemoryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDataSource.swift; sourceTree = "<group>"; };
+		00ADC8CF1F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDataSourceTest.swift; sourceTree = "<group>"; };
+		00ADC8D11F4F02E8009A5DE6 /* MemoryDataSourceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDataSourceTest.swift; sourceTree = "<group>"; };
 		0497D76761A5FD52C1158426 /* Pods_repositoriesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_repositoriesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D0790330CCEF4EAA8631B77 /* Pods-repositoriesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-repositoriesUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-repositoriesUITests/Pods-repositoriesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4C64433AB095C3698CEABF6E /* Pods-repositoriesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-repositoriesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-repositoriesTests/Pods-repositoriesTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		AE37704F025BC24B2F0CA414 /* Pods_repositoriesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_repositoriesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F16F6094A110E3990C0645 /* Pods-repositoriesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-repositoriesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-repositoriesUITests/Pods-repositoriesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E401DA391F4C6ADE00C30BAC /* Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
-		E401DA3B1F4C6B4D00C30BAC /* example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = example.swift; path = repositories/example.swift; sourceTree = SOURCE_ROOT; };
 		E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedDictionary.swift; sourceTree = "<group>"; };
 		E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRepository.swift; sourceTree = "<group>"; };
 		E401DA421F4D960800C30BAC /* RepositoryMother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryMother.swift; sourceTree = "<group>"; };
@@ -110,20 +110,13 @@
 		0049024B1F4C4265004C1411 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				004902551F4C6893004C1411 /* SQLiteDataSource.swift */,
+				00A643C41F4EB5800078FEDA /* MemoryDataSource.swift */,
+				E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */,
 				0049024C1F4C42B3004C1411 /* InMemoryCacheDataSource.swift */,
 				0049024E1F4C42C2004C1411 /* CachePolicies.swift */,
 			);
 			path = data;
-			sourceTree = "<group>";
-		};
-		004902541F4C6866004C1411 /* sql */ = {
-			isa = PBXGroup;
-			children = (
-				004902551F4C6893004C1411 /* SQLiteDataSource.swift */,
-				00A643C41F4EB5800078FEDA /* MemoryDataSource.swift */,
-				E401DA3D1F4D664200C30BAC /* OrderedDictionary.swift */,
-			);
-			path = sql;
 			sourceTree = "<group>";
 		};
 		009CCF5D1F4C10BC0050AE20 = {
@@ -149,7 +142,6 @@
 		009CCF681F4C10BD0050AE20 /* repositories */ = {
 			isa = PBXGroup;
 			children = (
-				004902541F4C6866004C1411 /* sql */,
 				0049024B1F4C4265004C1411 /* data */,
 				009CCF971F4C14CE0050AE20 /* domain */,
 				009CCF691F4C10BD0050AE20 /* AppDelegate.swift */,
@@ -165,8 +157,8 @@
 		009CCF7D1F4C10BD0050AE20 /* repositoriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				00ADC8CE1F4F02C8009A5DE6 /* data */,
 				E401DA411F4D954A00C30BAC /* domain */,
-				009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */,
 				009CCF801F4C10BD0050AE20 /* Info.plist */,
 				E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */,
 			);
@@ -177,7 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				009CCF981F4C14E10050AE20 /* repositories */,
-				E401DA3B1F4C6B4D00C30BAC /* example.swift */,
 			);
 			path = domain;
 			sourceTree = "<group>";
@@ -195,6 +186,15 @@
 				E401DA3F1F4D7F9900C30BAC /* ReactiveRepository.swift */,
 			);
 			path = repositories;
+			sourceTree = "<group>";
+		};
+		00ADC8CE1F4F02C8009A5DE6 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				00ADC8CF1F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift */,
+				00ADC8D11F4F02E8009A5DE6 /* MemoryDataSourceTest.swift */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 		A5F468ED992E6DCD5DC5B046 /* Pods */ = {
@@ -431,7 +431,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E401DA3C1F4C6B4D00C30BAC /* example.swift in Sources */,
 				009CCF6C1F4C10BD0050AE20 /* ViewController.swift in Sources */,
 				0049024A1F4C40AC004C1411 /* Identifiable.swift in Sources */,
 				0049024F1F4C42C2004C1411 /* CachePolicies.swift in Sources */,
@@ -455,9 +454,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */,
+				00ADC8D21F4F02E8009A5DE6 /* MemoryDataSourceTest.swift in Sources */,
 				E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */,
 				E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */,
-				009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */,
+				00ADC8D01F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift in Sources */,
 				E401DA471F4DBB4500C30BAC /* BaseRepositoryTest.swift in Sources */,
 				E401DA451F4DAA6400C30BAC /* DataSourceMock.swift in Sources */,
 			);

@@ -1,7 +1,5 @@
 import Foundation
 
-//let NoMoreItemsOffset: Int = -1
-
 class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value> where Value.Key == Key {
     var items: OrderedDictionary<Key, CacheItem<Value>>!
     let version: Int
@@ -14,7 +12,6 @@ class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
         let hasVersionPolicy = policies.index { $0 is CachePolicyVersion } != nil
 
         self.lastOffsetWithMoreItems = NoMoreItemsOffset
-//        super.init(isCache: isCache)
         super.init()
         if !hasVersionPolicy {
             self.policies = [CachePolicyVersion(version: version)] + policies
@@ -43,15 +40,15 @@ class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
     }
 
     override func getByKey(key: Key) -> Value? {
-        if let cachedItem = self.items[key],
-            self.itemIsValid(item: cachedItem, forCachePolicies: self.policies) {
-            executeAsCriticalSection {
-                // OrderedDictionary implementation of .values makes a temporary array and append elements to it
-                // so we need to make that part of the critical section
-                return cachedItem.value
+        if items != nil && !items.isEmpty, let cachedItem = self.items[key] {
+            if self.itemIsValid(item: cachedItem, forCachePolicies: self.policies) {
+//                executeAsCriticalSection {
+                    // OrderedDictionary implementation of .values makes a temporary array and append elements to it
+                    // so we need to make that part of the critical section
+                    return cachedItem.value
+//                }
             }
         }
-
         return nil
     }
     // MARK: ReadableDataSource
@@ -89,7 +86,6 @@ class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
     }
 
     override func addOrUpdateAll(values: [Value]) -> [Value]? {
-//        invalidateAll()
         append(items: values)
         return values
     }
@@ -106,7 +102,7 @@ class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
 
     override func deleteByKey(key: Key) {
         executeAsCriticalSection {
-            self.items.removeEntryForKey(key: key)
+            _ = self.items.removeEntryForKey(key: key)
         }
     }
 

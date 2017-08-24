@@ -14,7 +14,7 @@ class BaseRespositoryTest: XCTestCase {
         repositoryMother = RepositoryMother(readableDataSource: readableDataSource, writeableDataSource: writeableDataSource, cacheDataSource: cacheDataSource)
     }
 
-    func testshouldReturnNilIfThereAreNoDataSourcesWithData() {
+    func testShouldReturnNilIfThereAreNoDataSourcesWithData() {
         let repository = repositoryMother!.givenAReadableAndCacheRepository()
         readableDataSource.returnCollectionValue = nil
         cacheDataSource.returnCollectionValue = nil
@@ -24,7 +24,7 @@ class BaseRespositoryTest: XCTestCase {
         XCTAssertNil(values)
     }
 
-    func testshouldReturnDataFromCacheDataSourceIfDataIsValid() {
+    func testShouldReturnDataFromCacheDataSourceIfDataIsValid() {
         let cacheValues = repositoryMother!.givenCacheDataSourceReturnsValidValues()
         repositoryMother!.givenReadableDataSourceReturnsNil()
         let repository = repositoryMother!.givenAReadableAndCacheRepository()
@@ -34,7 +34,7 @@ class BaseRespositoryTest: XCTestCase {
         XCTAssertEqual(cacheValues, values!)
     }
 
-    func testshouldReturnDataFromReadableDataSourceIfCacheDataSourceReturnsNilOnGetAll() {
+    func testShouldReturnDataFromReadableDataSourceIfCacheDataSourceReturnsNilOnGetAll() {
         repositoryMother!.givenCacheDataSourceReturnsNil()
         let readableValues = repositoryMother!.givenReadableDataSourceReturnsValidValues()
         let repository = repositoryMother!.givenAReadableAndCacheRepository()
