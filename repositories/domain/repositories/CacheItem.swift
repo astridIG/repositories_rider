@@ -1,7 +1,6 @@
 import Foundation
 
 class CacheItem<Value: CodableProtocol> {
-
     var value: Value
     var version: Int
     var timestamp: Double

@@ -38,11 +38,10 @@ struct SQLiteRuntimeConfiguration {
     }
 }
 
-class SQLiteDataSource<Key, Value: CodableProtocol> : BaseRepository<Key,Value> where Value.Key == Key {
+class SQLiteDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value> where Value.Key == Key {
 
     private let dbPath: String
     let version: Int
-    let policies: [CachePolicy<Value>]
     let sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration
 
     private let queue: FMDatabaseQueue
@@ -54,12 +53,13 @@ class SQLiteDataSource<Key, Value: CodableProtocol> : BaseRepository<Key,Value> 
     init(version: Int, dbName: String = NSUUID().uuidString, policies: [CachePolicy<Value>] = [], isCache: Bool = true, sqliteRuntimeConfiguration: SQLiteRuntimeConfiguration) {
         self.dbPath = sqliteRuntimeConfiguration.generateDBPath(fileName: dbName)
         self.version = version
-        self.policies = policies
         self.sqliteRuntimeConfiguration = sqliteRuntimeConfiguration
 
         self.queue = FMDatabaseQueue(path: dbPath)
         self.lastOffsetWithMoreItems = NoMoreItemsOffset
-//        super.init(isCache: isCache)
+
+        super.init()
+        self.policies = policies
     }
 
     public convenience init(version: Int, dbName: String) {

@@ -14,7 +14,7 @@ class repositoriesTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testSQLiteDataSource() {
 
         let user = User(id: "id1", name: "usernameq")
         let user2 = User(id: "id2", name: "username2")
@@ -44,7 +44,38 @@ class repositoriesTests: XCTestCase {
             XCTFail("Error, there are not 3 users")
         }
     }
-    
+
+    func testMemoryDataSource() {
+
+        let user = User(id: "id1", name: "usernameq")
+        let user2 = User(id: "id2", name: "username2")
+        let user3 = User(id: "id3", name: "username3")
+        let timeUnit = NSDate().timeIntervalSince1970 * 3000
+
+        let cachePolicy = CachePolicyTtl<User>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let version = 5
+
+        let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
+
+        _ = memoryDataSource.addOrUpdate(value: user)
+
+        _ = memoryDataSource.addOrUpdateAll(values: [user2, user3])
+
+        let values = memoryDataSource.getAll()
+
+        let keyUser0 = values?[0].getKey()
+        let user0 = memoryDataSource.getByKey(key: keyUser0!)
+        if user0?.id == values?[0].id {
+            XCTAssert(true)
+        }
+
+        if values?.count == 3 {
+            XCTAssert(true)
+        } else {
+            XCTFail("Error, there are not 3 users")
+        }
+    }
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
