@@ -2,16 +2,24 @@ PODS:
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
+  - RxBlocking (3.6.1):
+    - RxSwift (~> 3.6)
   - RxSwift (3.6.1)
+  - RxTest (3.6.1):
+    - RxSwift (~> 3.6)
 
 DEPENDENCIES:
   - FMDB (~> 2.7.2)
+  - RxBlocking (~> 3.4)
   - RxSwift (~> 3.5)
+  - RxTest (~> 3.4)
 
 SPEC CHECKSUMS:
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  RxBlocking: 4f4bd5732e8b952e54ae8a57739bcfb645de12bc
   RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
+  RxTest: 1d00348a7848c91ab5bf5d197d2378aa6b2bb356
 
-PODFILE CHECKSUM: 4dbd4666b84e909704ddcc47e95f4d96238a3dde
+PODFILE CHECKSUM: 4718d6a5c629bc19afcf8f64b259b193b90f3b44
 
 COCOAPODS: 1.2.1

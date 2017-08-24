@@ -34,6 +34,7 @@
 		E401DA471F4DBB4500C30BAC /* BaseRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */; };
 		E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA481F4DC68900C30BAC /* TestValue.swift */; };
 		E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */; };
+		E4BDC3511F4F14520001C470 /* ReactiveRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BDC3501F4F14520001C470 /* ReactiveRepositoryTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepositoryTest.swift; sourceTree = "<group>"; };
 		E401DA481F4DC68900C30BAC /* TestValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestValue.swift; sourceTree = "<group>"; };
 		E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Expectations.swift"; sourceTree = "<group>"; };
+		E4BDC3501F4F14520001C470 /* ReactiveRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRepositoryTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +229,7 @@
 				E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */,
 				E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */,
 				E401DA481F4DC68900C30BAC /* TestValue.swift */,
+				E4BDC3501F4F14520001C470 /* ReactiveRepositoryTest.swift */,
 			);
 			path = domain;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 			files = (
 				E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */,
 				00ADC8D21F4F02E8009A5DE6 /* MemoryDataSourceTest.swift in Sources */,
+				E4BDC3511F4F14520001C470 /* ReactiveRepositoryTest.swift in Sources */,
 				E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */,
 				E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */,
 				00ADC8D01F4F02DE009A5DE6 /* SQLiteDataSourceTest.swift in Sources */,
