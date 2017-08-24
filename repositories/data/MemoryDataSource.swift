@@ -1,6 +1,7 @@
 import Foundation
 
 class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value> where Value.Key == Key {
+
     var items: OrderedDictionary<Key, CacheItem<Value>>!
     let version: Int
 

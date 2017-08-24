@@ -5,25 +5,34 @@ import XCTest
 class MemoryDataSourceTest: XCTestCase {
 
     let timeUnit = NSDate().timeIntervalSince1970 * 3000
-    let dbName = "test_db"
     let version = 1
+    let ttl = 12
 
-    func testShouldAddValue() {
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+    let test1 = TestValue(id: "id1")
+    let test2 = TestValue(id: "id2")
+    let test3 = TestValue(id: "id3")
+
+
+    func testShouldAddValueUsingCachePolicyTtl() {
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
-        let test1 = TestValue(id: "id1")
+        let value = memoryDataSource.addOrUpdate(value: test1)
+
+        XCTAssert(value == test1)
+    }
+
+    func testShouldAddValueUsingCachePolicyVersion() {
+        let cachePolicy = CachePolicyVersion<TestValue>(version: version)
+        let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
+
         let value = memoryDataSource.addOrUpdate(value: test1)
 
         XCTAssert(value == test1)
     }
 
     func testAddOrUpdateValues() {
-        let test1 = TestValue(id: "id1")
-        let test2 = TestValue(id: "id2")
-        let test3 = TestValue(id: "id3")
-
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
         let values = memoryDataSource.addOrUpdateAll(values: [test1, test2, test3])
@@ -32,20 +41,28 @@ class MemoryDataSourceTest: XCTestCase {
     }
 
     func testShouldGetValueByKey() {
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
-        let test1 = TestValue(id: "id1")
         _ = memoryDataSource.addOrUpdate(value: test1)
-        
+        let value = memoryDataSource.getByKey(key: "id1")
+
+        XCTAssert(value?.id == "id1")
+    }
+
+    func testShouldGetValueByKeyUsingCachePolicyVersion() {
+        let cachePolicy = CachePolicyVersion<TestValue>(version: version)
+        let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
+
+        _ = memoryDataSource.addOrUpdate(value: test1)
         let value = memoryDataSource.getByKey(key: "id1")
 
         XCTAssert(value?.id == "id1")
     }
 
 
-    func testShouldGetValueByKeyButMemoryIsEmpty() {
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+    func testShouldGetValueByKeyFromEmptyMemory() {
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
         let value = memoryDataSource.getByKey(key: "id1")
@@ -53,8 +70,8 @@ class MemoryDataSourceTest: XCTestCase {
         XCTAssert(value?.id == nil)
     }
 
-    func testShouldGetAllValuesButMemoryIsEmpty() {
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+    func testShouldGetAllValuesFromEmptyMemory() {
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
         let count = memoryDataSource.getAll()?.count
@@ -64,11 +81,7 @@ class MemoryDataSourceTest: XCTestCase {
 
     func testShouldGetAllValues() {
 
-        let test1 = TestValue(id: "id1")
-        let test2 = TestValue(id: "id2")
-        let test3 = TestValue(id: "id3")
-
-        let cachePolicy = CachePolicyTtl<TestValue>(ttl: 12, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
         let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
 
         _ = memoryDataSource.addOrUpdateAll(values: [test1, test2, test3])
@@ -76,5 +89,27 @@ class MemoryDataSourceTest: XCTestCase {
         let count = memoryDataSource.getAll()?.count
 
         XCTAssert(count == 3)
+    }
+
+    func testShouldDeleteValue() {
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
+
+        _ = memoryDataSource.addOrUpdateAll(values: [test1, test2, test3])
+        memoryDataSource.deleteByKey(key: "id1")
+
+        let count = memoryDataSource.getAll()?.count
+        XCTAssert(count == 2)
+    }
+
+    func testShouldDeleteValues() {
+        let cachePolicy = CachePolicyTtl<TestValue>(ttl: ttl, timeUnit: timeUnit, timeProvider: TimeProvider())
+        let memoryDataSource = MemoryDataSource(version: version, policies: [cachePolicy], isCache: false)
+
+        _ = memoryDataSource.addOrUpdateAll(values: [test1, test2, test3])
+        memoryDataSource.deleteAll()
+
+        let count = memoryDataSource.getAll()?.count
+        XCTAssert(count == 0)
     }
 }
