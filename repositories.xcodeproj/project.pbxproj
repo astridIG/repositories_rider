@@ -33,6 +33,7 @@
 		E401DA451F4DAA6400C30BAC /* DataSourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */; };
 		E401DA471F4DBB4500C30BAC /* BaseRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */; };
 		E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA481F4DC68900C30BAC /* TestValue.swift */; };
+		E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		E401DA441F4DAA6400C30BAC /* DataSourceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceMock.swift; sourceTree = "<group>"; };
 		E401DA461F4DBB4500C30BAC /* BaseRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepositoryTest.swift; sourceTree = "<group>"; };
 		E401DA481F4DC68900C30BAC /* TestValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestValue.swift; sourceTree = "<group>"; };
+		E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Expectations.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				E401DA411F4D954A00C30BAC /* domain */,
 				009CCF7E1F4C10BD0050AE20 /* repositoriesTests.swift */,
 				009CCF801F4C10BD0050AE20 /* Info.plist */,
+				E401DA4A1F4EBA7500C30BAC /* XCTestCase+Expectations.swift */,
 			);
 			path = repositoriesTests;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E401DA491F4DC68900C30BAC /* TestValue.swift in Sources */,
+				E401DA4B1F4EBA7500C30BAC /* XCTestCase+Expectations.swift in Sources */,
 				E401DA431F4D960800C30BAC /* RepositoryMother.swift in Sources */,
 				009CCF7F1F4C10BD0050AE20 /* repositoriesTests.swift in Sources */,
 				E401DA471F4DBB4500C30BAC /* BaseRepositoryTest.swift in Sources */,

@@ -1,7 +1,7 @@
 import Foundation
 @testable import repositories
 
-struct TestValue: CodableProtocol {
+struct TestValue: CodableProtocol, Equatable {
     func getKey() -> String {
         return self.id
     }
@@ -22,4 +22,8 @@ struct TestValue: CodableProtocol {
     func toJson() -> [String: Any] {
         return ["id": self.id]
     }
+}
+
+func==(lhs: TestValue, rhs: TestValue) -> Bool {
+    return lhs.id == rhs.id
 }

@@ -8,7 +8,7 @@ enum  ReadPolicy {
 
 extension ReadPolicy {
     func useCache() -> Bool {
-        return self == ReadPolicy.readableOnly || self == ReadPolicy.readAll
+        return self == ReadPolicy.cacheOnly || self == ReadPolicy.readAll
     }
 
     func useReadable() -> Bool {
