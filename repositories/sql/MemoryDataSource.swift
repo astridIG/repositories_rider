@@ -104,18 +104,16 @@ class MemoryDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
         }
     }
 
-    override func deleteByKey(key: Key) -> Bool {
+    override func deleteByKey(key: Key) {
         executeAsCriticalSection {
             self.items.removeEntryForKey(key: key)
         }
-        return true
     }
 
-    override func deleteAll() -> Bool {
+    override func deleteAll() {
         executeAsCriticalSection {
             self.items.removeAllEntries()
         }
-        return true
     }
 
     // MARK: Private methods

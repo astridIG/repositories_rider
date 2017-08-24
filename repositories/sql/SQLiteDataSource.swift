@@ -252,7 +252,7 @@ class SQLiteDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
         }
     }
 
-    override func deleteByKey(key: Key) -> Bool {
+    override public func deleteByKey(key: Key) {
         queue.inTransaction { db, rollback in
             do {
                 try self.executeSQLBlock(dataBase: db, fromInsideTransaction: true) { db in
@@ -268,14 +268,12 @@ class SQLiteDataSource<Key, Value: CodableProtocol> : CacheDataSource<Key,Value>
                 rollback.pointee = true
             }
         }
-        return true
     }
 
-    override func deleteAll() -> Bool {
+    override public func deleteAll() {
         queue.inTransaction { db, rollback in
             self.doDeleteAll(db: db, rollback: rollback)
         }
-        return true
     }
 
     private func doDeleteAll(db: FMDatabase!, rollback: UnsafeMutablePointer<ObjCBool>) {

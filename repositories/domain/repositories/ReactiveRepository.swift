@@ -53,17 +53,19 @@ class ReactiveBaseRepository<Key: Hashable, Value: CodableProtocol> : BaseReposi
     }
 
     func deleteByKeyReactive(key: Key) -> Completable {
-        if self.deleteByKey(key: key) {
+        do {
+            try self.deleteByKey(key: key)
             return Completable.empty()
-        } else {
+        } catch {
             return Completable.error(RepositoryError.unknown)
         }
     }
 
     func deleteAllReactive() -> Completable {
-        if self.deleteAll() {
+        do {
+            try self.deleteAll()
             return Completable.empty()
-        } else {
+        } catch {
             return Completable.error(RepositoryError.unknown)
         }
     }

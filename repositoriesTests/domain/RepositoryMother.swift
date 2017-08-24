@@ -125,10 +125,6 @@ class RepositoryMother {
         return values
     }
 
-//    func givenReadableDataSourceThrowsError(error: RepositoryError) {
-//        readableDataSource.error = error
-//    }
-
     func givenWriteableDataSourceWritesValue(value: TestValue) -> TestValue {
         let writeableValue = TestValue(id: value.id)
         writeableDataSource.returnValue = writeableValue

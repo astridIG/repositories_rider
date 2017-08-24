@@ -19,15 +19,15 @@ protocol WritableDataSourceProtocol {
 
     func addOrUpdate(value: Value) -> Value?
     func addOrUpdateAll(values: [Value]) -> [Value]?
-    func deleteByKey(key: Key) -> Bool
-    func deleteAll() -> Bool
+    func deleteByKey(key: Key) throws
+    func deleteAll() throws
 }
 
 class WriteableDataSource<Key: Hashable, Value: CodableProtocol>: WritableDataSourceProtocol {
     func addOrUpdate(value: Value) -> Value? { fatalError("Must override") }
     func addOrUpdateAll(values: [Value]) -> [Value]? { fatalError("Must override") }
-    func deleteByKey(key: Key) -> Bool { fatalError("Must override") }
-    func deleteAll() -> Bool { fatalError("Must override") }
+    func deleteByKey(key: Key) throws { fatalError("Must override") }
+    func deleteAll() throws { fatalError("Must override") }
 }
 
 protocol CacheDataSourceProtocol: ReadableDataSourceProtocol, WritableDataSourceProtocol {
@@ -43,8 +43,8 @@ class CacheDataSource<Key: Hashable, Value: CodableProtocol>: CacheDataSourcePro
 
     func addOrUpdate(value: Value) -> Value? { fatalError("Must override") }
     func addOrUpdateAll(values: [Value]) -> [Value]? { fatalError("Must override") }
-    func deleteByKey(key: Key) -> Bool{ fatalError("Must override") }
-    func deleteAll() -> Bool { fatalError("Must override") }
+    func deleteByKey(key: Key) throws { fatalError("Must override") }
+    func deleteAll() throws { fatalError("Must override") }
 
     func isValid(value: Value) -> Bool { fatalError("Must override") }
 }

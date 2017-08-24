@@ -27,7 +27,6 @@ class WriteableDataSourceMock<Key, Value: CodableProtocol>:  WriteableDataSource
 
     var returnValue: Value?
     var returnCollectionValue: [Value]?
-    var isDeleted: Bool = true
     var addOrUpdateCompletionBlock: ((Value)->())? = nil
     var addOrUpdateAllCompletionBlock: (([Value]) -> ())? = nil
     var deleteByKeyCompletionBlock: ((Key) -> ())? = nil
@@ -47,18 +46,16 @@ class WriteableDataSourceMock<Key, Value: CodableProtocol>:  WriteableDataSource
         return returnCollectionValue
     }
 
-    override func deleteByKey(key: Key) -> Bool {
+    override func deleteByKey(key: Key) {
         if let deleteByKeyCompletionBlock = deleteByKeyCompletionBlock {
             deleteByKeyCompletionBlock(key)
         }
-        return isDeleted
     }
 
-    override func deleteAll() -> Bool {
+    override func deleteAll() {
         if let deleteAllCompletionBlock = deleteAllCompletionBlock {
             deleteAllCompletionBlock()
         }
-        return isDeleted
     }
 
 }
@@ -67,7 +64,6 @@ class CacheDataSourceMock<Key, Value: CodableProtocol>:  CacheDataSource<Key, Va
 
     var returnValue: Value?
     var returnCollectionValue: [Value]?
-    var isDeleted: Bool = true
     var isValid: Bool = true
     var getAllCompletionBlock: (() -> ())? = nil
     var getByKeyCompletionBlock: ((Key) -> ())? = nil
@@ -104,18 +100,16 @@ class CacheDataSourceMock<Key, Value: CodableProtocol>:  CacheDataSource<Key, Va
         return returnCollectionValue
     }
 
-    override func deleteByKey(key: Key) -> Bool {
+    override func deleteByKey(key: Key) throws {
         if let deleteByKeyCompletionBlock = deleteByKeyCompletionBlock {
             deleteByKeyCompletionBlock(key)
         }
-        return isDeleted
     }
 
-    override func deleteAll() -> Bool {
+    override func deleteAll() throws {
         if let deleteAllCompletionBlock = deleteAllCompletionBlock {
             deleteAllCompletionBlock()
         }
-        return isDeleted
     }
 
     override func isValid(value: Value) -> Bool {

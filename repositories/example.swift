@@ -45,7 +45,7 @@ class DiskDataSource<K, V: CodableProtocol>: CacheDataSource<K,V> where V.Key ==
         if let item = item {
             return item
         } else {
-            deleteByKey(key: key)
+            try? deleteByKey(key: key)
             return nil
         }
     }

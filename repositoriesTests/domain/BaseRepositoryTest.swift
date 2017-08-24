@@ -54,13 +54,6 @@ class BaseRespositoryTest: XCTestCase {
         XCTAssertEqual(readableValues, values!)
     }
 
-//    func shouldPropagateExceptionsThrownByAnyDataSource() {
-//        mother.givenReadableDataSourceThrowsException(IOException())
-//        var repository = mother.givenARepository(of(RepositoryMother.DataSource.READABLE))
-//
-//        repository.getAll()
-//    }
-
     func testShouldGetDataFromReadableDataSourceIfReadPolicyForcesOnlyReadable() {
         let _ = repositoryMother!.givenCacheDataSourceReturnsValidValues()
         let _ = repositoryMother!.givenReadableDataSourceReturnsValidValues()
@@ -297,7 +290,7 @@ class BaseRespositoryTest: XCTestCase {
             writeableExpect.fulfill()
         }
 
-        let _ = repository.deleteAll()
+        let _ = try? repository.deleteAll()
 
         waitForExpectations()
     }
@@ -317,7 +310,7 @@ class BaseRespositoryTest: XCTestCase {
             writeableExpect.fulfill()
         }
 
-        let _ = repository.deleteByKey(key: repositoryMother!.key)
+        let _ = try? repository.deleteByKey(key: repositoryMother!.key)
 
         waitForExpectations()
     }

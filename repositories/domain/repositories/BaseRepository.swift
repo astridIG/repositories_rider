@@ -1,7 +1,6 @@
 import Foundation
 
 class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceProtocol, WritableDataSourceProtocol {
-
     private var readableDataSources = [ReadableDataSource<Key, Value>]()
     private var writableDataSources = [WriteableDataSource<Key, Value>]()
     private var cacheDataSources = [CacheDataSource<Key, Value>]()
@@ -92,30 +91,22 @@ class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceP
         return updatedValues
     }
 
-    func deleteByKey(key: Key) -> Bool {
-        var writableDeleted: Bool?
-        var cacheDeleted: Bool?
-
+    func deleteByKey(key: Key) throws {
         writableDataSources.forEach { writableDataSource in
-            writableDeleted = writableDataSource.deleteByKey(key: key)
+            try? writableDataSource.deleteByKey(key: key)
         }
         cacheDataSources.forEach { cacheDataSource in
-            cacheDeleted = cacheDataSource.deleteByKey(key: key)
+            try? cacheDataSource.deleteByKey(key: key)
         }
-        return writableDeleted! && cacheDeleted!
     }
 
-    func deleteAll() -> Bool {
-        var writableDeleted: Bool?
-        var cacheDeleted: Bool?
-
+    func deleteAll() throws {
         writableDataSources.forEach { writableDataSource in
-            writableDeleted = writableDataSource.deleteAll()
+            try? writableDataSource.deleteAll()
         }
         cacheDataSources.forEach { cacheDataSource in
-            cacheDeleted = cacheDataSource.deleteAll()
+            try? cacheDataSource.deleteAll()
         }
-        return writableDeleted! && cacheDeleted!
     }
 
     // MARK: Private
@@ -129,7 +120,7 @@ class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceP
                 if (cacheDataSource.isValid(value: val)) {
                     break
                 } else {
-                    let _ = cacheDataSource.deleteByKey(key: id)
+                    try? cacheDataSource.deleteByKey(key: id)
                     value = nil
                 }
             }
@@ -162,7 +153,7 @@ class BaseRepository<Key: Hashable, Value: CodableProtocol>: ReadableDataSourceP
                     if areValidValues(values: val, cacheDataSource: cacheDataSource) {
                         break
                     } else {
-                        let _ = cacheDataSource.deleteAll()
+                        try? cacheDataSource.deleteAll()
                         values = nil
                     }
                 }
